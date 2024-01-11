@@ -26,7 +26,8 @@ cmp.setup{
 
   sources = cmp.config.sources({
     { name = 'nvim_lsp' },                -- LSP
-    { name = 'copilot' },                 -- Copilot
+    -- { name = 'copilot' },                 -- Copilot
+    { name = "codeium" },                 -- Codeium
     { name = 'nvim_lsp_signature_help' }, -- LSP for parameters in functions
     { name = 'nvim_lua' },                -- Lua Neovim API
     { name = 'luasnip' },                 -- Luasnip
@@ -41,14 +42,15 @@ cmp.setup{
       maxwidth = 50,   -- Prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
       ellipsis_char = '...',
       symbol_map = {
-          Copilot = '󰚩',
+          Codeium = "",
+          -- Copilot = '󰚩',
       }
     })
   }
 }
 
-require("copilot").setup()
-require("copilot_cmp").setup()
+-- require("copilot").setup()
+-- require("copilot_cmp").setup()
 
 -- Add snippets from Friendly Snippets
 require("luasnip/loaders/from_vscode").lazy_load()

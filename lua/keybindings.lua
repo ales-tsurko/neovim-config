@@ -1,5 +1,6 @@
 require "helpers/globals"
 require "helpers/keyboard"
+require "insert_bindings"
 
 g.mapleader = ' ' -- Use Space, like key for alternative hotkeys
 
@@ -30,8 +31,8 @@ vm('gs', '<Esc><Cmd>Sort<CR>')
 -- }}}
 
 -- git {{{
-nm("hu", "<cmd>Gitsigns reset_hunk<CR>")
-nm("hp", "<cmd>Gitsigns preview_hunk<CR>")
+nm("<leader>hu", "<cmd>Gitsigns reset_hunk<CR>")
+nm("<leader>hp", "<cmd>Gitsigns preview_hunk<CR>")
 -- }}}
 
 -- session {{{
@@ -53,7 +54,7 @@ nm('<C-t>c', '<cmd>BufDel<CR>')
 -- }}}
 
 -- terminal {{{
-cmd[[
+cmd [[
     " exit from terminal mode with Esc
     tnoremap <Esc> <C-\><C-n>
     " navigate windows with alt+h/j/k/l
@@ -71,130 +72,22 @@ cmd[[
 -- comments {{{
 -- line
 vim.keymap.set("n", "<leader>/", function()
-    require('Comment.api').toggle.linewise.current()
+  require('Comment.api').toggle.linewise.current()
 end)
 
 -- selection
 local esc = vim.api.nvim_replace_termcodes(
-    '<ESC>', true, false, true
+  '<ESC>', true, false, true
 )
 
 vim.keymap.set('x', '<leader>/', function()
-    vim.api.nvim_feedkeys(esc, 'nx', false)
-    require('Comment.api').toggle.linewise(vim.fn.visualmode())
+  vim.api.nvim_feedkeys(esc, 'nx', false)
+  require('Comment.api').toggle.linewise(vim.fn.visualmode())
 end)
 -- }}}
 
 -- vimwiki {{{
 nm('<leader>tt', '<cmd>VimwikiToggleListItem<CR>')
--- }}}
-
--- insert mode mappings {{{
-cmd[[
-    " to move in insert mode
-    " move cursour word left
-    inoremap <A-Left> <C-o>b
-    " move cursour word right
-    inoremap <A-Right> <Esc>ea
-    " delete word left
-    inoremap <A-Bs> <C-w>
-    " delete word right
-    inoremap <A-S-Bs> <C-o>dw
-    " move cursor left
-    inoremap <C-h> <Left>
-    " move cursor left
-    inoremap <C-l> <Right>
-    " move cursor down
-    inoremap <C-j> <Down>
-    " move cursor up
-    inoremap <C-k> <Up>
-    " move cursor to line start
-    inoremap <C-S-h> <C-o>^
-    " move cursor to line end
-    inoremap <C-S-l> <C-o>$
-    " delete everything after cursor until the line end
-    inoremap <C-S-u> <C-o><S-d>
-    " undo
-    inoremap <C-z> <C-o>u
-    " redo
-    inoremap <C-S-z> <C-o><C-r>
-    " save buffer
-    inoremap <C-s> <C-o>:w<Enter>
-    " paste buffer
-    inoremap <C-v> <C-o>P
-    " scroll up/down
-    inoremap <C-u> <C-o><C-u>
-    inoremap <C-d> <C-o><C-d>
-]]
--- }}}
-
--- neovide {{{
-if g.neovide then
-    g.neovide_padding_top = 0
-    g.neovide_padding_bottom = 0
-    g.neovide_padding_right = 0
-    g.neovide_padding_left = 0
-    g.neovide_scroll_animation_length = 0.6
-    g.neovide_cursor_animation_length = 0.03
-    g.neovide_cursor_animate_command_line = false
-    g.neovide_fullscreen = true
-    g.neovide_hide_mouse_when_typing = true
-    g.neovide_confirm_quit = true
-
-    opt.linespace = 1
-    opt.guifont = "Iosevka_NFM_Light:h13"
-
-    cmd[[
-        " save buffer
-        inoremap <D-s> <C-o>:w<CR>
-        " undo/redo
-        inoremap <D-z> <C-o>u
-        inoremap <D-y> <C-o><C-r>
-
-        " copy line (empty selection)
-        inoremap <D-c> <C-o>yy
-        nnoremap <D-c> yy
-        " cut line (empty selection)
-        inoremap <D-x> <C-o>dd
-        nnoremap <D-x> dd
-        " paste
-        inoremap <D-v> <Esc>pa
-        nnoremap <D-v> p
-        " copy selection
-        vnoremap <D-c> y
-        " paste into selected area
-        vnoremap <D-v> p
-
-        " move to start/end of the line
-        inoremap <D-Left> <C-o>^
-        inoremap <D-Right> <C-o>$
-        " remove to the start/end of the line
-        inoremap <D-Backspace> <Esc>v^c
-        inoremap <D-Delete> <Esc>vEc
-        " move line down/up
-        inoremap <A-Down> <C-o>dd<C-o>p
-        inoremap <A-Up> <C-o>dd<C-o>k<C-o>P
-        " copy line down/up
-        inoremap <A-S-Down> <C-o>yy<C-o>p
-        inoremap <A-S-Up> <C-o>yy<C-o>P
-        " insert line above
-        inoremap <D-Enter> <C-o>O
-        " go to the start of the file
-        inoremap <D-Up> <C-o>gg
-        " go to the end of the file
-        inoremap <D-Down> <C-o>G
-        " toggle comment
-        inoremap <D-/> <C-o>:lua require('Comment.api').toggle.linewise.current()<CR>
-        " select current line
-        inoremap <D-l> <C-o>V
-        " split vertically
-        inoremap <D-Bslash> <C-o>:vsplit<CR><C-o><C-w>l
-        " close window
-        inoremap <D-w> <C-o>:BufDel<CR>
-        " create empty buffer
-        inoremap <D-n> <C-o>:enew<CR>
-    ]]
-end
 -- }}}
 
 -- LSP {{{
@@ -204,27 +97,34 @@ nm(']d', 'vim.diagnostic.goto_next')
 -- Use LspAttach autocommand to only map the following keys
 -- after the language server attaches to the current buffer
 api.nvim_create_autocmd('LspAttach', {
-    group = api.nvim_create_augroup('UserLspConfig', {}),
-    callback = function(ev)
-        -- Enable completion triggered by <c-x><c-o>
-        vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
+  group = api.nvim_create_augroup('UserLspConfig', {}),
+  callback = function(ev)
+    -- Enable completion triggered by <c-x><c-o>
+    vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
 
-        -- Buffer local mappings.
-        -- See `:help vim.lsp.*` for documentation on any of the below functions
-        local bufopts = {
-            noremap = true,
-            silent = true,
-            buffer = bufnr
-        }
-        local opts = {
-            buffer = ev.buf
-        }
-        vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
-        vim.keymap.set('n', '<leader>f', vim.lsp.buf.format, bufopts)
-        vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, bufopts)
-        vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, bufopts)
-    end
+    -- Buffer local mappings.
+    -- See `:help vim.lsp.*` for documentation on any of the below functions
+    local bufopts = {
+      noremap = true,
+      silent = true,
+      buffer = bufnr
+    }
+    local opts = {
+      buffer = ev.buf
+    }
+    vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
+    vim.keymap.set('n', '<leader>f', vim.lsp.buf.format, bufopts)
+    vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, bufopts)
+    vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, bufopts)
+  end
 })
+-- }}}
+
+-- Other {{{
+cmd [[
+nnoremap <CR> a
+nnoremap <S-CR> o
+]]
 -- }}}
 
 -- vim:tabstop=2 shiftwidth=2 expandtab syntax=lua foldmethod=marker foldlevelstart=0

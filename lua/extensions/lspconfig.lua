@@ -5,19 +5,22 @@ require("mason").setup()
 
 mason_lspconfig.setup({
     ensure_installed = {
-    "lua_ls",        -- LSP for Lua language
-    "tsserver",      -- LSP for Typescript and Javascript
-    "pyright",       -- LSP for Python
-    "rust_analyzer", -- LSP for Rust
-    "taplo",         -- LSP for TOML
-    "wgsl_analyzer"  -- LSP for WebGPU Shading Language
+        "lua_ls",    -- LSP for Lua language
+        "tsserver",  -- LSP for Typescript and Javascript
+        "pyright",   -- LSP for Python
+        "rust_analyzer", -- LSP for Rust
+        "taplo",     -- LSP for TOML
+        "wgsl_analyzer" -- LSP for WebGPU Shading Language
     }
 });
 
 -- Setup every needed language server in lspconfig
-mason_lspconfig.setup_handlers {function(server_name)
+mason_lspconfig.setup_handlers { function(server_name)
     lspconfig[server_name].setup {}
-end}
+end }
+
+-- Initialize slint LSP
+lspconfig.slint_lsp.setup {}
 
 -- this is for diagnositcs signs on the line number column
 -- use this to beautify the plain E W signs to more fun ones

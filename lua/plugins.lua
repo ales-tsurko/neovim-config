@@ -9,13 +9,30 @@ require "helpers/globals"
 
 return {
   -- dashboard, start page {{{
+  -- {
+  --   "glepnir/dashboard-nvim",
+  --   event = 'VimEnter',
+  --   config = function()
+  --     require "extensions.dashboard"
+  --   end,
+  --   dependencies = "nvim-tree/nvim-web-devicons"
+  -- },
+
   {
-    "glepnir/dashboard-nvim",
-    event = 'VimEnter',
+    "mhinz/vim-startify",
+
+    dependencies = {
+      {
+        "tiagovla/scope.nvim",
+        lazy = false,
+        config = function()
+          require "extensions.scope"
+        end
+      }
+    },
     config = function()
-      require "extensions.dashboard"
-    end,
-    dependencies = "nvim-tree/nvim-web-devicons"
+      require "extensions.startify"
+    end
   },
   --}}}
 
@@ -30,6 +47,12 @@ return {
     config = function()
       -- the config is called inside LSP config to call it in the right order
     end
+  },
+  -- }}}
+
+  -- DAP (Debug Adapter Protocol) {{{
+  {
+    'mfussenegger/nvim-dap',
   },
   -- }}}
 
@@ -57,7 +80,7 @@ return {
   -- nvim-tree (file browser) {{{
   {
     "nvim-tree/nvim-tree.lua",
-    config = function ()
+    config = function()
       require "extensions.tree"
     end
   },
@@ -66,11 +89,12 @@ return {
   -- Telescope {{{
   {
     'nvim-telescope/telescope.nvim',
-    tag = '0.1.1',
+    branch = '0.1.x',
     lazy = false,
     dependencies = {
       "nvim-lua/plenary.nvim",
       "ahmedkhalf/project.nvim",
+      "nvim-telescope/telescope-ui-select.nvim"
     },
     config = function()
       require "extensions.telescope"
@@ -91,14 +115,25 @@ return {
       'hrsh7th/cmp-emoji',
       'hrsh7th/cmp-nvim-lsp-signature-help',
       'hrsh7th/cmp-nvim-lua',
-      'zbirenbaum/copilot.lua',
-      'zbirenbaum/copilot-cmp',
+      -- 'zbirenbaum/copilot.lua',
+      -- 'zbirenbaum/copilot-cmp',
       'rafamadriz/friendly-snippets',
       'onsails/lspkind-nvim',
     },
     config = function()
       require "extensions.cmp"
     end
+  },
+  -- }}}
+
+  -- Codeium {{{
+  {
+    "Exafunction/codeium.nvim",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "hrsh7th/nvim-cmp",
+    },
+    config = true,
   },
   -- }}}
 
@@ -220,21 +255,6 @@ return {
   },
   --}}}
 
-  -- persisted.nvim (session management) {{{
-  {
-    "olimorris/persisted.nvim",
-    dependencies = {
-      {
-        "tiagovla/scope.nvim",
-        lazy = false,
-      }
-    },
-    config = function()
-      require "extensions.persisted"
-    end
-  },
-  --}}}
-
   -- lualine {{{
   {
     "nvim-lualine/lualine.nvim",
@@ -247,19 +267,22 @@ return {
   -- }}}
 
   -- bufferline {{{
-    {
-      "akinsho/bufferline.nvim",
-      version = "*",
-      dependencies = "nvim-tree/nvim-web-devicons",
-      config = function()
-        require "extensions.bufferline"
-      end
-    },
+  {
+    "akinsho/bufferline.nvim",
+    version = "*",
+    dependencies = "nvim-tree/nvim-web-devicons",
+    config = function()
+      require "extensions.bufferline"
+    end
+  },
   -- }}}
 
   -- bufdel {{{
   {
     "ojroques/nvim-bufdel",
+    config = function()
+      require "extensions.bufdel"
+    end
   },
   --}}}
 
@@ -293,11 +316,26 @@ return {
   {
     "folke/which-key.nvim",
     event = "VeryLazy",
-    config = function ()
+    config = function()
       require "extensions.which-key"
     end
   },
   --}}}
+
+  -- language: nu {{{
+  {
+    "LhKipp/nvim-nu",
+    config = function()
+      require("nu").setup({})
+    end
+  },
+  -- }}}
+
+  -- language: slint {{{
+  {
+    "slint-ui/vim-slint"
+  },
+  -- }}}
 
   -- Theme: Catppuccin {{{
   {
@@ -305,12 +343,25 @@ return {
     name = "catppuccin",
     priority = 1000,
     lazy = false,
-    config = function ()
+    config = function()
       require "extensions.colorscheme.catppuccin"
     end
   },
   -- }}}
 
+  -- WGSL syntax highlighting {{{
+  {
+    "DingDean/wgsl.vim",
+  },
+  -- }}}
+
+  -- rust stuff {{{
+  {
+    'mrcjkb/rustaceanvim',
+    version = '^3', -- Recommended
+    ft = { 'rust' },
+  },
+  -- }}}
 }
 
 -- vim:tabstop=2 shiftwidth=2 expandtab syntax=lua foldmethod=marker foldlevelstart=0

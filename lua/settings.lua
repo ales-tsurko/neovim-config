@@ -141,6 +141,18 @@ cmd [[anoremenu PopUp.-1-                         <Nop>]]
 cmd [[nnoremenu PopUp.Rust:\ Expand\ Macro <Cmd>RustLsp expandMacro<CR>]]
 -- }}}
 
+-- sessions {{{ 
+vim.opt.sessionoptions = {
+    "blank",
+    "buffers",
+    "curdir",
+    "globals",
+    "help",
+    "tabpages",
+    "winsize",
+}
+-- }}}
+
 -- Default Plugins {{{
 local disabled_built_ins = {
   -- "netrw",

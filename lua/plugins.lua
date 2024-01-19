@@ -36,6 +36,15 @@ return {
   },
   --}}}
 
+  -- pretty-fold: better foldings {{{
+  {
+    'anuvyklack/pretty-fold.nvim',
+    config = function ()
+      require "extensions.pretty-fold"
+    end
+  },
+  -- }}}
+
   -- Mason {{{
   {
     "williamboman/mason.nvim",
@@ -300,6 +309,7 @@ return {
   {
     "petertriho/nvim-scrollbar",
     lazy = false,
+    enabled = not vim.g.neovide,
     config = function()
       require "extensions.scrollbar"
     end
@@ -325,6 +335,11 @@ return {
   -- language: nu {{{
   {
     "LhKipp/nvim-nu",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "jose-elias-alvarez/null-ls.nvim",
+      "zioroboco/nu-ls.nvim",
+    },
     config = function()
       require("nu").setup({})
     end
@@ -337,7 +352,33 @@ return {
   },
   -- }}}
 
-  -- Theme: Catppuccin {{{
+  -- WGSL syntax highlighting {{{
+  {
+    "DingDean/wgsl.vim",
+  },
+  -- }}}
+
+  -- rust stuff (DISABLED - slows down or makes vim hang) {{{
+  {
+    'mrcjkb/rustaceanvim',
+    enable = false,
+    version = '^3', -- Recommended
+    ft = { 'rust' },
+  },
+  -- }}}
+
+  -- twilight: dim innactive code (DISABLED) {{{
+  {
+    "folke/twilight.nvim",
+    enabled = false,
+    config = function()
+      require "extensions.twilight"
+      cmd("TwilightEnable")
+    end
+  },
+  -- }}}
+
+  -- Colorthemes {{{
   {
     "catppuccin/nvim",
     name = "catppuccin",
@@ -347,20 +388,61 @@ return {
       require "extensions.colorscheme.catppuccin"
     end
   },
-  -- }}}
 
-  -- WGSL syntax highlighting {{{
   {
-    "DingDean/wgsl.vim",
+    -- DEFAULT
+    'mcchrish/zenbones.nvim',
+    dependencies = {
+      'rktjmp/lush.nvim'
+    },
+    lazy = false,
+    priority = 1000,
+    config = function()
+      vim.o.background = 'dark'
+      -- cmd("color zenwritten")
+      -- cmd("color nordbones")
+      cmd("color tokyobones")
+    end
   },
-  -- }}}
 
-  -- rust stuff {{{
   {
-    'mrcjkb/rustaceanvim',
-    version = '^3', -- Recommended
-    ft = { 'rust' },
+    "nyoom-engineering/oxocarbon.nvim",
+    priority = 1000,
+    -- config = function()
+    --   vim.opt.background = 'dark'
+    --   cmd("color oxocarbon")
+    -- end
   },
+
+  {
+    "pbrisbin/vim-colors-off",
+    priority = 1000,
+    -- config = function()
+    --   vim.opt.background = 'dark'
+    --   cmd("color off")
+    -- end
+  },
+
+  {
+    "ales-tsurko/paramount-ng.nvim",
+    priority = 1000,
+    dependencies = {
+      "rktjmp/lush.nvim"
+    },
+    -- config = function()
+    --   vim.opt.background = 'dark'
+    --   cmd("color paramount-ng")
+    -- end
+  },
+
+  {
+    "AlexvZyl/nordic.nvim",
+    lazy = false,
+    priority = 1000,
+    -- config = function()
+    --     require 'nordic'.load()
+    -- end
+  }
   -- }}}
 }
 

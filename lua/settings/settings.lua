@@ -4,7 +4,8 @@
   Info: Use <zo> and <zc> to open and close foldings
 ]]
 
-require "helpers/globals"
+require "../helpers/globals"
+require "settings/project_config"
 
 -- Set associating between turned on plugins and filetype
 cmd [[filetype plugin on]]
@@ -20,18 +21,21 @@ opt.softtabstop = 0    -- Set amount of space characters, when we press "<Tab>"
 -- }}}
 
 -- Editing {{{
+opt.foldenable = true
 opt.spelllang = "en_us,ru_ru" -- Set spell language
 opt.wrap = false              -- Disable word wrap
 -- }}}
 
 -- UI {{{
-opt.termguicolors = true  -- Enable 24-bit RGB colors
-opt.background = "dark"   -- Set dark background
-opt.cursorline = true     -- Highlight current line
-opt.number = true         -- Show line numbers
-opt.laststatus = 3        -- Single status line
-opt.signcolumn = "yes"    -- Always show sign column
-opt.fillchars = ""        -- Remove split line
+opt.termguicolors = true -- Enable 24-bit RGB colors
+opt.cursorline = true    -- Highlight current line
+opt.number = false       -- Don't show line numbers
+opt.laststatus = 3       -- Single status line
+opt.signcolumn = "yes:2" -- Always show sign column
+opt.fillchars = ""       -- Remove split line
+opt.foldnestmax = 3
+opt.foldminlines = 1
+cmd [[ set viewoptions=folds,cursor ]]
 cmd [[set colorcolumn=+1]] -- Show vertical line width line
 -- }}}
 
@@ -97,7 +101,13 @@ cmd [[au FileType tsx setlocal tw=100]]
 cmd [[au FileType py setlocal tw=80]]
 cmd [[au FileType python setlocal tw=80]]
 -- rust
+
 cmd [[au FileType rust setlocal tw=100]]
+cmd [[au FileType rust setlocal foldmethod=manual]]
+-- cmd [[au FileType rust setlocal foldmethod=marker]]
+-- cmd [[au FileType rust setlocal foldmarker={,}]]
+cmd [[au FileType rust setlocal foldlevelstart=0]]
+cmd [[au FileType rust setlocal foldenable]]
 -- lua
 cmd [[au FileType lua setlocal tw=80]]
 -- yaml
@@ -109,21 +119,20 @@ cmd [[autocmd FileType gitcommit,gitrebase,gitconfig set bufhidden=delete]]
 cmd [[au FileType slint setlocal tw=0]]
 -- }}}
 
--- neovide {{{ 
+-- neovide {{{
 if g.neovide then
-    g.neovide_padding_top = 0
-    g.neovide_padding_bottom = 0
-    g.neovide_padding_right = 0
-    g.neovide_padding_left = 0
-    g.neovide_scroll_animation_length = 0.6
-    g.neovide_cursor_animation_length = 0.03
-    g.neovide_cursor_animate_command_line = false
-    g.neovide_fullscreen = true
-    g.neovide_hide_mouse_when_typing = true
-    g.neovide_confirm_quit = true
+  g.neovide_padding_top = 0
+  g.neovide_padding_bottom = 0
+  g.neovide_padding_right = 0
+  g.neovide_padding_left = 0
+  g.neovide_scroll_animation_length = 0.6
+  g.neovide_cursor_animation_length = 0.03
+  g.neovide_cursor_animate_command_line = false
+  g.neovide_fullscreen = true
+  g.neovide_confirm_quit = true
 
-    opt.linespace = 1
-    opt.guifont = "Iosevka_NFM_Light:h13"
+  opt.linespace = 1
+  opt.guifont = "Iosevka_NFM:h13"
 end
 -- }}}
 
@@ -141,15 +150,15 @@ cmd [[anoremenu PopUp.-1-                         <Nop>]]
 cmd [[nnoremenu PopUp.Rust:\ Expand\ Macro <Cmd>RustLsp expandMacro<CR>]]
 -- }}}
 
--- sessions {{{ 
+-- sessions {{{
 vim.opt.sessionoptions = {
-    "blank",
-    "buffers",
-    "curdir",
-    "globals",
-    "help",
-    "tabpages",
-    "winsize",
+  "blank",
+  "buffers",
+  "curdir",
+  "globals",
+  "help",
+  "tabpages",
+  "winsize",
 }
 -- }}}
 

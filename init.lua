@@ -7,8 +7,8 @@
 require "lazy-bootstrap"
 
 -- Settings
-require "settings"
-require "keybindings"
+require "settings/settings"
+require "keybindings/keybindings"
 
 -- Plugin management {{{
 local lazy = require("lazy")

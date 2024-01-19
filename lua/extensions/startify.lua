@@ -8,17 +8,20 @@ vim.g.startify_session_sort = 1
 
 
 function make_startify_menu()
-    local center = math.floor(vim.api.nvim_win_get_width(0)/2)
+    -- local center = math.floor(vim.api.nvim_win_get_width(0)/2)
 
     -- I don't know why, but the center is not a center... 
     -- making additional offset by eye...
-    local padding = center + 20
+    -- local padding = center + 20
+
+    local padding = 30
 
     local string_padding = string.rep(" ", padding)
 
     vim.g.startify_padding_left = padding + 10
     vim.g.startify_list_order = {
-        { string_padding .. ' Settings:' },
+        -- { string_padding .. ' Settings:' },
+        { '' },
         'commands',
         { string_padding .. '󰚝 Sessions:' },
         'sessions',
@@ -28,11 +31,6 @@ function make_startify_menu()
 end
 
 make_startify_menu()
-
-vim.api.nvim_create_autocmd("VimResized", {
-    pattern = "*",
-    callback = make_startify_menu,
-})
 
 vim.g.startify_fortune_use_unicode = 1
 vim.g.startify_session_autoload = 1
@@ -44,5 +42,3 @@ vim.g.startify_commands = {
     { s = { 'Settings', 'SLoad config' } },
 }
 
--- Set keybinding for closing current session
-nm('<Leader>sc', ':SClose<CR>')

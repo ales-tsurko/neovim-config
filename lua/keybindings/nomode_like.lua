@@ -4,10 +4,8 @@ cmd [[
     " to move in insert mode
     " move cursour word left
     inoremap <A-Left> <C-o>b
-    inoremap <A-C-h> <C-o>b
     " move cursour word right
     inoremap <A-Right> <Esc>ea
-    inoremap <A-C-l> <Esc>ea
     " delete word left
     inoremap <A-Bs> <C-w>
     " delete word right
@@ -34,7 +32,8 @@ local function remap_key(key, other)
 end
 
 -- show commands
-map_key('<D-P>', 'Telescope')
+vim.api.nvim_set_keymap('i', '<C-Space>', '<Esc>:',
+    { noremap = true, silent = false })
 
 -- fuzzy finder
 map_key('<D-p>', 'Telescope find_files theme=ivy')
@@ -95,7 +94,7 @@ function _G.wrap_text(open_char, close_char)
     local yanked_text = vim.fn.getreg('a')
     vim.fn.setreg('a', save_reg, save_regtype)
     vim.api.nvim_command('normal! gv"ad')
-    vim.api.nvim_put({open_char .. yanked_text .. close_char}, 'c', false, true)
+    vim.api.nvim_put({ open_char .. yanked_text .. close_char }, 'c', false, true)
 end
 
 vim.api.nvim_set_keymap('x', '}', '<cmd>lua wrap_text("{", "}")<CR>', { noremap = true, silent = true })
@@ -110,7 +109,20 @@ vim.api.nvim_set_keymap('x', '`', '<cmd>lua wrap_text("`", "`")<CR>', { noremap 
 remap_key('<D-Left>', '^')
 remap_key('<D-Right>', '$')
 -- remove to the start/end of the line
-vim.api.nvim_set_keymap('i', '<D-Backspace>', '<Esc>v0c', { noremap = true, silent = true })
+
+function DeleteToStartOfLineOrPrevious()
+    local row, col = unpack(vim.api.nvim_win_get_cursor(0))
+    if col == 0 then
+        -- If at the start of the line, delete the previous line
+        vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<BS>', true, false, true), 'i', false)
+    else
+        -- If not at the start, delete to the start of the current line
+        vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Esc>v0c', true, false, true), 'i', false)
+    end
+end
+
+vim.api.nvim_set_keymap('i', '<D-Backspace>', '<cmd>lua DeleteToStartOfLineOrPrevious()<CR>',
+    { noremap = true, silent = true })
 vim.api.nvim_set_keymap('i', '<D-Delete>', '<Esc>vEc', { noremap = true, silent = true })
 -- indent/outdent line
 vim.api.nvim_set_keymap('i', '<D-]>', '<C-t>', { noremap = true, silent = true })
@@ -121,7 +133,6 @@ vim.api.nvim_set_keymap('x', '<D-0>', '%', { noremap = true, silent = true })
 
 
 -- Selection
-
 
 -- show keyboard shortcuts
 map_key('<D-k><D-s>', 'Telescope keymaps')

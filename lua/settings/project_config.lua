@@ -19,13 +19,13 @@ end
 
 vim.api.nvim_create_augroup("RememberFolds", { clear = true })
 
-vim.api.nvim_create_autocmd("BufWinLeave", {
+vim.api.nvim_create_autocmd("BufWritePost", {
     group = "RememberFolds",
     pattern = "*.*",
     command = "mkview"
 })
 
-vim.api.nvim_create_autocmd("BufWinEnter", {
+vim.api.nvim_create_autocmd("BufRead", {
     group = "RememberFolds",
     pattern = "*.*",
     command = "silent! loadview"

@@ -9,7 +9,13 @@ require("telescope").setup({
                 prompt_position = "top",
                 mirror = true
             }
-        }
+        },
+        windblend = 30,
+        prompt_prefix = "🔍 ",
+        selection_caret = "▊ ",
+        -- borderchars = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
+        borderchars = { ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ' },
+        dynamic_preview_title = true,
     },
     pickers = {
         find_files = {
@@ -18,4 +24,6 @@ require("telescope").setup({
     }
 })
 
+require("telescope").load_extension("frecency")
+-- require("telescope").load_extension('cmdline')
 require("telescope").load_extension("ui-select")

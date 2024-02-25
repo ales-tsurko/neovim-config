@@ -7,6 +7,17 @@
 require "../helpers/globals"
 require "settings/project_config"
 
+
+-- make neovim default to insert mode (except startify)
+-- vim.api.nvim_create_autocmd({"BufEnter", "BufWinEnter"}, {
+--     pattern = "*",
+--     callback = function()
+--         if vim.bo.filetype ~= "startify" then
+--             vim.cmd("start")
+--         end
+--     end
+-- })
+
 -- Set associating between turned on plugins and filetype
 cmd [[filetype plugin on]]
 
@@ -24,19 +35,23 @@ opt.softtabstop = 0    -- Set amount of space characters, when we press "<Tab>"
 opt.foldenable = true
 opt.spelllang = "en_us,ru_ru" -- Set spell language
 opt.wrap = false              -- Disable word wrap
+opt.scrolloff=999 -- Keep cursor always in the middle
+cmd [[ set completeopt="menuone,preview"]]
 -- }}}
 
 -- UI {{{
 opt.termguicolors = true -- Enable 24-bit RGB colors
 opt.cursorline = true    -- Highlight current line
-opt.number = false       -- Don't show line numbers
+opt.number = true        -- line numbers
 opt.laststatus = 3       -- Single status line
 opt.signcolumn = "yes:2" -- Always show sign column
-opt.fillchars = ""       -- Remove split line
+opt.guifont = "Iosevka Nerd Font Mono:14"
+cmd [[set fillchars=eob:\ ]]
 opt.foldnestmax = 3
 opt.foldminlines = 1
 cmd [[ set viewoptions=folds,cursor ]]
 cmd [[set colorcolumn=+1]] -- Show vertical line width line
+cmd [[ set mousescroll=ver:1,hor:1]]
 -- }}}
 
 -- Optimizations {{{
@@ -122,9 +137,9 @@ cmd [[au FileType slint setlocal tw=0]]
 -- neovide {{{
 if g.neovide then
   g.neovide_padding_top = 0
-  g.neovide_padding_bottom = 0
-  g.neovide_padding_right = 0
-  g.neovide_padding_left = 0
+  g.neovide_padding_bottom = 40
+  g.neovide_padding_right = 60
+  g.neovide_padding_left = 60
   g.neovide_scroll_animation_length = 0.6
   g.neovide_cursor_animation_length = 0.03
   g.neovide_cursor_animate_command_line = false

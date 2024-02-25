@@ -36,10 +36,31 @@ return {
   },
   --}}}
 
+  -- noice (gui for commandline, messages, etc.) {{{
+  {
+    "folke/noice.nvim",
+    event = "VeryLazy",
+    opts = {
+      -- add any options here
+    },
+    dependencies = {
+      -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
+      "MunifTanjim/nui.nvim",
+      -- OPTIONAL:
+      --   `nvim-notify` is only needed, if you want to use the notification view.
+      --   If not available, we use `mini` as the fallback
+      "rcarriga/nvim-notify",
+    },
+    config = function()
+      require "extensions.noice"
+    end
+  },
+  -- }}}
+
   -- pretty-fold: better foldings {{{
   {
     'anuvyklack/pretty-fold.nvim',
-    config = function ()
+    config = function()
       require "extensions.pretty-fold"
     end
   },
@@ -95,6 +116,18 @@ return {
   },
   -- }}}
 
+  -- oil (file browser) {{{
+  {
+    'stevearc/oil.nvim',
+    opts = {},
+    -- Optional dependencies
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    config = function()
+      require "extensions.oil"
+    end
+  },
+  -- }}}
+
   -- Telescope {{{
   {
     'nvim-telescope/telescope.nvim',
@@ -103,6 +136,8 @@ return {
     dependencies = {
       "nvim-lua/plenary.nvim",
       "ahmedkhalf/project.nvim",
+      "nvim-telescope/telescope-frecency.nvim",
+      'jonarrien/telescope-cmdline.nvim',
       "nvim-telescope/telescope-ui-select.nvim"
     },
     config = function()
@@ -305,15 +340,15 @@ return {
   },
   -- }}}
 
-  -- scroll-bar {{{
-  {
-    "petertriho/nvim-scrollbar",
-    lazy = false,
-    enabled = not vim.g.neovide,
-    config = function()
-      require "extensions.scrollbar"
-    end
-  },
+  -- scroll-bar (disabled - doesn't work well with GUIs) {{{
+  -- {
+  --   "petertriho/nvim-scrollbar",
+  --   lazy = false,
+  --   enabled = not (vim.g.GuiLoaded or vim.fn.exists('$NVIM_GUI') == 1),
+  --   config = function()
+  --     require "extensions.scrollbar"
+  --   end
+  -- },
   -- }}}
 
   -- preview colors {{{
@@ -331,6 +366,37 @@ return {
     end
   },
   --}}}
+
+  -- neophyte (config for wgpu-based neovim frontend) {{{
+  {
+    'tim-harding/neophyte',
+    tag = '0.2.2',
+    event = 'VeryLazy',
+    config = function()
+      require "extensions.neophyte"
+    end
+  },
+  -- }}}
+
+  -- org-mode {{{
+  {
+    'nvim-orgmode/orgmode',
+    dependencies = {
+      { 'nvim-treesitter/nvim-treesitter', lazy = true },
+    },
+    event = 'VeryLazy',
+    config = function()
+      require "extensions.orgmode"
+    end
+  },
+
+  {
+    'akinsho/org-bullets.nvim',
+    config = function()
+      require('org-bullets').setup()
+    end
+  },
+  -- }}}
 
   -- language: nu {{{
   {
@@ -359,12 +425,11 @@ return {
   -- }}}
 
   -- rust stuff (DISABLED - slows down or makes vim hang) {{{
-  {
-    'mrcjkb/rustaceanvim',
-    enable = false,
-    version = '^3', -- Recommended
-    ft = { 'rust' },
-  },
+  -- {
+  --   'mrcjkb/rustaceanvim',
+  --   version = '^3', -- Recommended
+  --   ft = { 'rust' },
+  -- },
   -- }}}
 
   -- twilight: dim innactive code (DISABLED) {{{

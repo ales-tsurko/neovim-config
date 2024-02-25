@@ -10,10 +10,14 @@ vm('y', 'ygv<Esc>', "yank")
 -- Open Telescope.
 nm('<leader><leader>', '<cmd>Telescope<CR>', 'Open Telescope.')
 
+-- command-line {{{ 
+-- nm(':', '<cmd>Telescope cmdline theme=dropdown<CR>', 'Open command line.')
+-- }}}
+
 -- files {{{
-nm('<Leader>fo', '<cmd>Telescope find_files theme=ivy<CR>', 'Find files.')
-nm('<Leader>ff', '<cmd>Telescope live_grep theme=ivy<CR>', 'Find string (live grep preview).')
-nm('<Leader>fs', '<cmd>Telescope current_buffer_fuzzy_find theme=ivy<CR>', 'Find string in the current buffer.')
+nm('<Leader>fo', '<cmd>Telescope frecency workspace=CWD<CR>', 'Find files.')
+nm('<Leader>ff', '<cmd>Telescope live_grep <CR>', 'Find string (live grep preview).')
+nm('<Leader>fs', '<cmd>Telescope current_buffer_fuzzy_find<CR>', 'Find string in the current buffer.')
 nm('<Tab>', '<cmd>NvimTreeToggle<CR>', 'Toggle file explorer.') -- Toggle file explorer
 -- }}}
 

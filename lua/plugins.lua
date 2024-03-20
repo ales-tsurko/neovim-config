@@ -107,23 +107,28 @@ return {
   },
   --}}}
 
-  -- nvim-tree (file browser) {{{
+-- indent-blankline (DISABLED) {{{
   {
-    "nvim-tree/nvim-tree.lua",
+    'lukas-reineke/indent-blankline.nvim',
+    main = 'ibl',
     config = function()
-      require "extensions.tree"
+      require "extensions.ibl"
     end
   },
   -- }}}
 
-  -- oil (file browser) {{{
+  -- neo-tree file, symbols browser {{{
   {
-    'stevearc/oil.nvim',
-    opts = {},
-    -- Optional dependencies
-    dependencies = { "nvim-tree/nvim-web-devicons" },
+    "nvim-neo-tree/neo-tree.nvim",
+    branch = "v3.x",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
+      "MunifTanjim/nui.nvim",
+      "3rd/image.nvim",              -- Optional image support in preview window: See `# Preview Mode` for more information
+    },
     config = function()
-      require "extensions.oil"
+      require "extensions.neotree"
     end
   },
   -- }}}
@@ -138,7 +143,8 @@ return {
       "ahmedkhalf/project.nvim",
       "nvim-telescope/telescope-frecency.nvim",
       'jonarrien/telescope-cmdline.nvim',
-      "nvim-telescope/telescope-ui-select.nvim"
+      "nvim-telescope/telescope-ui-select.nvim",
+      "catgoose/telescope-helpgrep.nvim",
     },
     config = function()
       require "extensions.telescope"
@@ -258,13 +264,6 @@ return {
     config = function()
       require "extensions.trouble"
     end,
-  },
-  -- }}}
-
-  -- show due dates {{{
-  {
-    'NFrid/due.nvim',
-    config = true,
   },
   -- }}}
 
@@ -443,7 +442,7 @@ return {
   },
   -- }}}
 
-  -- Colorthemes {{{
+  -- color themes {{{
   {
     "catppuccin/nvim",
     name = "catppuccin",
@@ -463,7 +462,6 @@ return {
     lazy = false,
     priority = 1000,
     config = function()
-      vim.o.background = 'dark'
       -- cmd("color zenwritten")
       -- cmd("color nordbones")
       cmd("color tokyobones")
@@ -504,10 +502,19 @@ return {
     "AlexvZyl/nordic.nvim",
     lazy = false,
     priority = 1000,
-    -- config = function()
-    --     require 'nordic'.load()
-    -- end
-  }
+    config = function()
+        -- require 'nordic'.load()
+    end
+  },
+
+  {
+    "olimorris/onedarkpro.nvim",
+    lazy = false,
+    priority = 1000,
+    config = function()
+      -- cmd("color onedarkpro")
+    end
+  },
   -- }}}
 }
 

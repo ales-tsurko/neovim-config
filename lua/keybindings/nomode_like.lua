@@ -31,9 +31,9 @@ local function remap_key(key, other)
     vim.api.nvim_set_keymap('i', key, '<C-\\><C-o>' .. other, { noremap = true, silent = true })
 end
 
--- show commands
-vim.api.nvim_set_keymap('i', '<C-Space>', '<Esc>:',
-    { noremap = true, silent = false })
+-- -- show commands
+-- vim.api.nvim_set_keymap('i', '<C-Space>', '<Esc>:',
+--     { noremap = true, silent = false })
 
 -- fuzzy finder
 map_key('<D-p>', 'Telescope find_files theme=ivy')

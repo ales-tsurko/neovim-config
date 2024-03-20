@@ -8,16 +8,6 @@ require "../helpers/globals"
 require "settings/project_config"
 
 
--- make neovim default to insert mode (except startify)
--- vim.api.nvim_create_autocmd({"BufEnter", "BufWinEnter"}, {
---     pattern = "*",
---     callback = function()
---         if vim.bo.filetype ~= "startify" then
---             vim.cmd("start")
---         end
---     end
--- })
-
 -- Set associating between turned on plugins and filetype
 cmd [[filetype plugin on]]
 
@@ -35,14 +25,14 @@ opt.softtabstop = 0    -- Set amount of space characters, when we press "<Tab>"
 opt.foldenable = true
 opt.spelllang = "en_us,ru_ru" -- Set spell language
 opt.wrap = false              -- Disable word wrap
-opt.scrolloff=999 -- Keep cursor always in the middle
+opt.scrolloff = 999           -- Keep cursor always in the middle
 cmd [[ set completeopt="menuone,preview"]]
 -- }}}
 
 -- UI {{{
 opt.termguicolors = true -- Enable 24-bit RGB colors
 opt.cursorline = true    -- Highlight current line
-opt.number = true        -- line numbers
+opt.number = false        -- line numbers
 opt.laststatus = 3       -- Single status line
 opt.signcolumn = "yes:2" -- Always show sign column
 opt.guifont = "Iosevka Nerd Font Mono:14"
@@ -52,6 +42,11 @@ opt.foldminlines = 1
 cmd [[ set viewoptions=folds,cursor ]]
 cmd [[set colorcolumn=+1]] -- Show vertical line width line
 cmd [[ set mousescroll=ver:1,hor:1]]
+opt.mouse = "a"
+cmd [[ set mousemoveevent ]]
+-- custom statuscolumn to add more space after the line number
+opt.statuscolumn = "%s%=%T%r%l   %T"
+opt.background = "dark"
 -- }}}
 
 -- Optimizations {{{
@@ -116,7 +111,6 @@ cmd [[au FileType tsx setlocal tw=100]]
 cmd [[au FileType py setlocal tw=80]]
 cmd [[au FileType python setlocal tw=80]]
 -- rust
-
 cmd [[au FileType rust setlocal tw=100]]
 cmd [[au FileType rust setlocal foldmethod=manual]]
 -- cmd [[au FileType rust setlocal foldmethod=marker]]

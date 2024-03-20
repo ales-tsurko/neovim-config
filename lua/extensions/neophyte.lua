@@ -21,12 +21,12 @@ neophyte.setup({
   },
   font_size = {
     kind = 'width', -- 'width' | 'height'
-    size = 13,
+    size = 14,
   },
   -- Multipliers of the base animation speed.
   -- To disable animations, set these to large values like 1000.
   cursor_speed = 2,
-  scroll_speed = 2,
+  scroll_speed = 0.3,
   -- Increase or decrease the distance from the baseline for underlines.
   underline_offset = 1,
   -- For transparent window effects, use this to set the default background color. 
@@ -64,6 +64,6 @@ end)
 -- -color_range 1 -colorspace 1 -color_primaries 1 -crf 23 -y /my/output/video.mp4
 
 -- Start rendering
-neophyte.start_render('/directory/to/output/frames/')
+-- neophyte.start_render('/directory/to/output/frames/')
 -- Stop rendering
-neophyte.end_render()
+-- neophyte.end_render()

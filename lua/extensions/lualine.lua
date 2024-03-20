@@ -11,17 +11,14 @@ end
 
 require('lualine').setup({
     sections = {
+        lualine_a = {
+            { 'mode', fmt = function(str) return str:sub(1, 1) end }
+        },
         lualine_b = {
             {
                 'branch',
                 on_click = function()
                     cmd [[Telescope git_branches]]
-                end
-            },
-            {
-                'diff',
-                on_click = function()
-                    cmd [[DiffviewOpen]]
                 end
             },
             {
@@ -34,9 +31,6 @@ require('lualine').setup({
         lualine_c = {
             {
                 cwd,
-                on_click = function()
-                    cmd [[Telescope persisted]]
-                end,
                 color = {
                     gui = 'bold',
                 },
@@ -48,17 +42,10 @@ require('lualine').setup({
                 on_click = function()
                     cmd [[Telescope find_files]]
                 end,
-                separator = '@',
                 padding = { left = 1, right = 0 },
             },
-            {
-                "location",
-                padding = 0,
-            },
         },
-        lualine_x = {
-
-        },
+        lualine_x = {},
         lualine_y = {
             {
                 'filetype',
@@ -75,7 +62,7 @@ require('lualine').setup({
             },
         },
         lualine_z = {
-            "progress",
+            "location",
         }
     },
     options = {

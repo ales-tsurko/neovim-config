@@ -2,8 +2,6 @@ require "../helpers/globals"
 require "../helpers/keyboard"
 require "keybindings/nomode_like"
 
-cmd [[ let mapleader = "\<M-Space>"]] -- Use Space, like key for alternative hotkeys
-
 -- prevent moving cursor when yanking (copying)
 vm('y', 'ygv<Esc>', "yank")
 
@@ -16,13 +14,13 @@ im('<leader><leader>', '<cmd>Telescope<CR>', 'Open Telescope.')
 -- }}}
 
 -- files {{{
+nm('<A-Tab>', '<cmd>Neotree position=top toggle<CR>', 'Toggle file explorer.') -- Toggle file explorer
 nm('<Leader>fo', '<cmd>Telescope frecency workspace=CWD<CR>', 'Find files.')
 nm('<Leader>ff', '<cmd>Telescope live_grep <CR>', 'Find string (live grep preview).')
 nm('<Leader>fs', '<cmd>Telescope current_buffer_fuzzy_find<CR>', 'Find string in the current buffer.')
 im('<Leader>fo', '<cmd>Telescope frecency workspace=CWD<CR>', 'Find files.')
 im('<Leader>ff', '<cmd>Telescope live_grep <CR>', 'Find string (live grep preview).')
 im('<Leader>fs', '<cmd>Telescope current_buffer_fuzzy_find<CR>', 'Find string in the current buffer.')
-nm('<Tab>', '<cmd>Neotree position=top toggle<CR>', 'Toggle file explorer.') -- Toggle file explorer
 -- }}}
 
 -- buffers {{{
@@ -54,7 +52,7 @@ nm('<leader>dg', '<cmd>Telescope helpgrep<CR>', 'Grep documentation.')
 im('<leader>dg', '<cmd>Telescope helpgrep<CR>', 'Grep documentation.')
 -- }}}
 
--- giagnostics {{{
+-- diagnostics {{{
 nm('<leader>xx', '<cmd>TroubleToggle<CR>', 'Show diagnostics.') -- Show all problems in project (with help of LSP)
 nm('<Leader>xn', 'vim.diagnostic.goto_prev', 'Go to previous error or warning.')
 nm('<Leader>xp', 'vim.diagnostic.goto_next', 'Go to next error or warning.')
@@ -64,9 +62,9 @@ im('<Leader>xp', 'vim.diagnostic.goto_next', 'Go to next error or warning.')
 -- }}}
 
 -- sorting {{{
-nm('<Leader>s', '<Cmd>Sort<CR>', 'Sort.')
-vm('<Leader>s', '<Esc><Cmd>Sort<CR>', 'Sort.')
-im('<Leader>s', '<Cmd>Sort<CR>', 'Sort.')
+nm('<Leader>cs', '<Cmd>Sort<CR>', 'Sort.')
+vm('<Leader>cs', '<Esc><Cmd>Sort<CR>', 'Sort.')
+im('<Leader>cs', '<Cmd>Sort<CR>', 'Sort.')
 -- }}}
 
 -- Git {{{
@@ -102,15 +100,15 @@ cmd [[
 -- }}}
 
 -- comments {{{
-vim.keymap.set("n", "<leader>/", function()
+vim.keymap.set("n", "<C-;>", function()
   require('Comment.api').toggle.linewise.current()
 end, { noremap = true, silent = true, desc = 'Toggle comment.' })
-vim.keymap.set("i", "<leader>/", function()
+vim.keymap.set("i", "<C-;>", function()
   require('Comment.api').toggle.linewise.current()
 end, { noremap = true, silent = true, desc = 'Toggle comment.' })
 
 
-vim.keymap.set('x', '<leader>/', function()
+vim.keymap.set('x', '<C-;>', function()
   vim.api.nvim_feedkeys(esc, 'nx', false)
   require('Comment.api').toggle.linewise(vim.fn.visualmode())
 end, { noremap = true, silent = true, desc = 'Toggle comment.' })
@@ -155,10 +153,6 @@ api.nvim_create_autocmd('LspAttach', {
   end
 })
 
-cmd [[
-nnoremap <CR> a
-nnoremap <S-CR> o
-]]
 -- }}}
 
 -- vim:tabstop=2 shiftwidth=2 expandtab syntax=lua foldmethod=marker foldlevelstart=0

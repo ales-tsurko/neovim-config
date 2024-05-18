@@ -1,6 +1,6 @@
 require("toggleterm").setup({
     size = 20,
-    open_mapping = [[<S-Tab>]],
+    open_mapping = [[<C-Esc>]],
     shade_terminals = false,
     direction = "horizontal",
 })

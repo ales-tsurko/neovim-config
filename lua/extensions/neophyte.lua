@@ -21,12 +21,12 @@ neophyte.setup({
   },
   font_size = {
     kind = 'width', -- 'width' | 'height'
-    size = 14,
+    size = 11,
   },
   -- Multipliers of the base animation speed.
   -- To disable animations, set these to large values like 1000.
   cursor_speed = 2,
-  scroll_speed = 0.3,
+  -- scroll_speed = 0.3,
   -- Increase or decrease the distance from the baseline for underlines.
   underline_offset = 1,
   -- For transparent window effects, use this to set the default background color. 

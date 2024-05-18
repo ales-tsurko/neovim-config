@@ -5,19 +5,128 @@
   ]]
 
 
--- Load treesitter grammar for org
-require('orgmode').setup_ts_grammar()
-
--- Setup treesitter
-require('nvim-treesitter.configs').setup({
-    highlight = {
-        enable = true,
-    },
-    ensure_installed = { 'org' },
-})
-
 -- Setup orgmode
 require('orgmode').setup({
     org_agenda_files = '~/org/**/*',
     org_default_notes_file = '~/org/index.org',
+    org_todo_keywords = { 'TODO', 'BUG', 'VERIFY', '|', 'DONE', 'FIXED', 'CANCELED' },
+    org_hide_leading_stars = true,
+    mappings = {
+        -- commented-out are defaults
+        -- prefix = '<Leader>o',
+        -- global = {
+        --     org_agenda = '<prefix>a',
+        --     org_capture = '<prefix>c',
+        -- },
+        -- agenda = {
+        --     org_agenda_later = 'f',
+        --     org_agenda_earlier = 'b',
+        --     org_agenda_goto_today = '.',
+        --     org_agenda_day_view = 'vd',
+        --     org_agenda_week_view = 'vw',
+        --     org_agenda_month_view = 'vm',
+        --     org_agenda_year_view = 'vy',
+        --     org_agenda_quit = 'q',
+        --     org_agenda_switch_to = '<CR>',
+        --     org_agenda_goto = '<TAB>',
+        --     org_agenda_goto_date = 'J',
+        --     org_agenda_redo = 'r',
+        --     org_agenda_todo = 't',
+        --     org_agenda_clock_goto = '<prefix>xj',
+        --     org_agenda_set_effort = '<prefix>xe',
+        --     org_agenda_clock_in = 'I',
+        --     org_agenda_clock_out = 'O',
+        --     org_agenda_clock_cancel = 'X',
+        --     org_agenda_clockreport_mode = 'R',
+        --     org_agenda_priority = '<prefix>,',
+        --     org_agenda_priority_up = '+',
+        --     org_agenda_priority_down = '-',
+        --     org_agenda_archive = '<prefix>$',
+        --     org_agenda_toggle_archive_tag = '<prefix>A',
+        --     org_agenda_set_tags = '<prefix>t',
+        --     org_agenda_deadline = '<prefix>id',
+        --     org_agenda_schedule = '<prefix>is',
+        --     org_agenda_filter = '/',
+        --     org_agenda_refile = '<prefix>r',
+        --     org_agenda_show_help = 'g?',
+        -- },
+        -- capture = {
+        --     org_capture_finalize = '<C-c>',
+        --     org_capture_refile = '<prefix>r',
+        --     org_capture_kill = '<prefix>k',
+        --     org_capture_show_help = 'g?',
+        -- },
+        -- note = {
+        --     org_note_finalize = '<C-c>',
+        --     org_note_kill = '<prefix>k',
+        --     org_note_show_help = 'g?',
+        -- },
+        org = {
+            -- org_refile = '<prefix>r',
+            -- org_timestamp_up_day = '<S-UP>',
+            -- org_timestamp_down_day = '<S-DOWN>',
+            -- org_timestamp_up = '<C-a>',
+            -- org_timestamp_down = '<C-x>',
+            -- org_change_date = 'cid',
+            org_priority = '<prefix>,',
+            org_priority_up = '<S-UP>',
+            org_priority_down = '<S-DOWN>',
+            org_todo = '<S-RIGHT>',
+            org_todo_prev = '<S-LEFT>',
+            org_toggle_checkbox = '<C-Space>',
+            org_toggle_heading = '<prefix>*',
+            org_open_at_point = '<CR>',
+            org_edit_special = [[<prefix>']],
+            org_cycle = '<TAB>',
+            org_global_cycle = '<S-TAB>',
+            org_archive_subtree = '<prefix>$',
+            org_set_tags_command = '<prefix>t',
+            org_toggle_archive_tag = '<prefix>A',
+            org_do_promote = '<A-LEFT>',
+            org_do_demote = '<A-RIGHT>',
+            org_promote_subtree = '<A-S-LEFT>',
+            org_demote_subtree = '<A-S-RIGHT>',
+            org_meta_return = '<Leader><CR>',                       -- Add heading, item or row (context-dependent)
+            org_return = '<CR>',
+            org_insert_heading_respect_content = '<prefix>ih',      -- Add new heading after current heading block (same level)
+            org_insert_todo_heading = '<prefix>iT',                 -- Add new todo heading right after current heading (same level)
+            org_insert_todo_heading_respect_content = '<prefix>it', -- Add new todo heading after current heading block (same level)
+            org_move_subtree_up = '<M-UP>',
+            org_move_subtree_down = '<M-DOWN>',
+            org_export = '<prefix>e',
+            org_next_visible_heading = '}',
+            org_previous_visible_heading = '{',
+            org_forward_heading_same_level = ']]',
+            org_backward_heading_same_level = '[[',
+            outline_up_heading = 'g{',
+            org_deadline = '<prefix>id',
+            org_schedule = '<prefix>is',
+            org_time_stamp = '<prefix>i.',
+            org_time_stamp_inactive = '<prefix>i!',
+            org_insert_link = '<prefix>li',
+            org_store_link = '<prefix>ls',
+            org_clock_in = '<prefix>xi',
+            org_clock_out = '<prefix>xo',
+            org_clock_cancel = '<prefix>xq',
+            org_clock_goto = '<prefix>xj',
+            org_set_effort = '<prefix>xe',
+            org_show_help = 'g?',
+            org_babel_tangle = '<prefix>bt',
+        },
+        edit_src = {
+            org_edit_src_abort = '<prefix>k',
+            org_edit_src_save = '<prefix>w',
+            org_edit_src_show_help = 'g?',
+        },
+        text_objects = {
+            inner_heading = 'ih',
+            around_heading = 'ah',
+            inner_subtree = 'ir',
+            around_subtree = 'ar',
+            inner_heading_from_root = 'Oh',
+            around_heading_from_root = 'OH',
+            inner_subtree_from_root = 'Or',
+            around_subtree_from_root = 'OR',
+        },
+    },
 })

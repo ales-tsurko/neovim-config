@@ -47,6 +47,8 @@ cmd [[ set mousemoveevent ]]
 -- custom statuscolumn to add more space after the line number
 opt.statuscolumn = "%s%=%T%r%l   %T"
 opt.background = "dark"
+opt.conceallevel = 2
+opt.concealcursor = "nv"
 -- }}}
 
 -- Optimizations {{{

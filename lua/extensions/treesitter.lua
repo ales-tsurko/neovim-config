@@ -24,7 +24,7 @@ require'nvim-treesitter.configs'.setup {
       "julia",
       "lua",
       "markdown",
-      "nu",
+      -- "nu",
       "org",
       "python",
       "regex",

@@ -58,12 +58,12 @@ return {
   -- }}}
 
   -- pretty-fold: better foldings {{{
-  {
-    'anuvyklack/pretty-fold.nvim',
-    config = function()
-      require "extensions.pretty-fold"
-    end
-  },
+  -- {
+  --   'anuvyklack/pretty-fold.nvim',
+  --   config = function()
+  --     require "extensions.pretty-fold"
+  --   end
+  -- },
   -- }}}
 
   -- Mason {{{
@@ -311,7 +311,7 @@ return {
 
   -- bufferline {{{
   {
-    "akinsho/bufferline.nvim",
+    "Theyashsawarkar/bufferline.nvim",
     version = "*",
     dependencies = "nvim-tree/nvim-web-devicons",
     config = function()
@@ -366,15 +366,15 @@ return {
   },
   --}}}
 
-  -- neophyte (config for wgpu-based neovim frontend) {{{
-  {
-    'tim-harding/neophyte',
-    tag = '0.2.2',
-    event = 'VeryLazy',
-    config = function()
-      require "extensions.neophyte"
-    end
-  },
+  -- neophyte (config for wgpu-based neovim frontend) (DISABLED breaks neovim 0.10) {{{
+  -- {
+  --   'tim-harding/neophyte',
+  --   tag = '0.2.2',
+  --   event = 'VeryLazy',
+  --   config = function()
+  --     require "extensions.neophyte"
+  --   end
+  -- },
   -- }}}
 
   -- org-mode {{{
@@ -397,18 +397,18 @@ return {
   },
   -- }}}
 
-  -- language: nu {{{
-  {
-    "LhKipp/nvim-nu",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      "jose-elias-alvarez/null-ls.nvim",
-      "zioroboco/nu-ls.nvim",
-    },
-    config = function()
-      require("nu").setup({})
-    end
-  },
+  -- language: nu (DISABLED breaks 0.10) {{{
+  -- {
+  --   "LhKipp/nvim-nu",
+  --   dependencies = {
+  --     "nvim-lua/plenary.nvim",
+  --     "jose-elias-alvarez/null-ls.nvim",
+  --     "zioroboco/nu-ls.nvim",
+  --   },
+  --   config = function()
+  --     require("nu").setup({})
+  --   end
+  -- },
   -- }}}
 
   -- language: slint {{{

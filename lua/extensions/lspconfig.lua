@@ -6,12 +6,13 @@ require("mason").setup()
 
 mason_lspconfig.setup({
     ensure_installed = {
-        "lua_ls",    -- LSP for Lua language
-        "tsserver",  -- LSP for Typescript and Javascript
-        "pyright",   -- LSP for Python
+        "lua_ls",        -- LSP for Lua language
+        "tsserver",      -- LSP for Typescript and Javascript
+        "pyright",       -- LSP for Python
         "rust_analyzer", -- LSP for Rust
-        "taplo",     -- LSP for TOML
-        "wgsl_analyzer" -- LSP for WebGPU Shading Language
+        "taplo",         -- LSP for TOML
+        "wgsl_analyzer", -- LSP for WebGPU Shading Language
+        "efm", -- general purpose LSP
     }
 });
 

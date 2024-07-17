@@ -45,7 +45,9 @@ require('lualine').setup({
                 padding = { left = 1, right = 0 },
             },
         },
-        lualine_x = {},
+        lualine_x = {
+            { require('NeoComposer.ui').status_recording },
+        },
         lualine_y = {
             {
                 'filetype',

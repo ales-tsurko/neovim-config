@@ -36,10 +36,10 @@ return {
   },
   --}}}
 
-  -- noice (gui for commandline, messages, etc.) {{{
+  -- noice (gui for commandline, messages, etc.) DISABLED {{{
   {
     "folke/noice.nvim",
-    event = "VeryLazy",
+    -- event = "VeryLazy",
     opts = {
       -- add any options here
     },
@@ -90,7 +90,10 @@ return {
   {
     'neovim/nvim-lspconfig',
     lazy = false,
-    dependencies = "williamboman/mason.nvim",
+    dependencies = {
+      "williamboman/mason.nvim",
+      "creativenull/efmls-configs-nvim"
+    },
     config = function()
       require "extensions.lspconfig"
     end
@@ -107,14 +110,14 @@ return {
   },
   --}}}
 
--- indent-blankline (DISABLED) {{{
-  {
-    'lukas-reineke/indent-blankline.nvim',
-    main = 'ibl',
-    config = function()
-      require "extensions.ibl"
-    end
-  },
+  -- indent-blankline (DISABLED) {{{
+  -- {
+  --   'lukas-reineke/indent-blankline.nvim',
+  --   main = 'ibl',
+  --   config = function()
+  --     require "extensions.ibl"
+  --   end
+  -- },
   -- }}}
 
   -- neo-tree file, symbols browser {{{
@@ -125,10 +128,23 @@ return {
       "nvim-lua/plenary.nvim",
       "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
       "MunifTanjim/nui.nvim",
-      "3rd/image.nvim",              -- Optional image support in preview window: See `# Preview Mode` for more information
+      -- "3rd/image.nvim",              -- Optional image support in preview window: See `# Preview Mode` for more information
     },
     config = function()
       require "extensions.neotree"
+    end
+  },
+  -- }}}
+
+  -- dropbar/breadcrumbs {{{
+  {
+    'Bekaboo/dropbar.nvim',
+    -- optional, but required for fuzzy finder support
+    dependencies = {
+      'nvim-telescope/telescope-fzf-native.nvim'
+    },
+    config = function()
+      require "extensions.dropbar"
     end
   },
   -- }}}
@@ -145,9 +161,20 @@ return {
       'jonarrien/telescope-cmdline.nvim',
       "nvim-telescope/telescope-ui-select.nvim",
       "catgoose/telescope-helpgrep.nvim",
+      "ecthelionvi/NeoComposer.nvim",
     },
     config = function()
       require "extensions.telescope"
+    end
+  },
+  -- }}}
+
+  -- NeoComposer (macro manager) {{{
+  {
+    "ecthelionvi/NeoComposer.nvim",
+    dependencies = { "kkharji/sqlite.lua" },
+    config = function()
+      require("NeoComposer").setup()
     end
   },
   -- }}}
@@ -163,7 +190,7 @@ return {
       'hrsh7th/cmp-nvim-lsp',
       'hrsh7th/cmp-path',
       'hrsh7th/cmp-emoji',
-      'hrsh7th/cmp-nvim-lsp-signature-help',
+      'hrsh7th/cmp-cmdline', 'hrsh7th/cmp-nvim-lsp-signature-help',
       'hrsh7th/cmp-nvim-lua',
       -- 'zbirenbaum/copilot.lua',
       -- 'zbirenbaum/copilot-cmp',
@@ -216,8 +243,12 @@ return {
 
   -- find and replace {{{
   {
-    'brooth/far.vim',
+    'MagicDuck/grug-far.nvim',
+    config = true,
   },
+  -- {
+  --   'brooth/far.vim',
+  -- },
   -- }}}
 
   -- neogit {{{
@@ -302,7 +333,10 @@ return {
   {
     "nvim-lualine/lualine.nvim",
     lazy = false,
-    dependencies = "nvim-tree/nvim-web-devicons",
+    dependencies = {
+      "nvim-tree/nvim-web-devicons",
+      "ecthelionvi/NeoComposer.nvim",
+    },
     config = function()
       require "extensions.lualine"
     end
@@ -311,7 +345,7 @@ return {
 
   -- bufferline {{{
   {
-    "Theyashsawarkar/bufferline.nvim",
+    "akinsho/bufferline.nvim",
     version = "*",
     dependencies = "nvim-tree/nvim-web-devicons",
     config = function()
@@ -337,6 +371,10 @@ return {
       require "extensions.devicons"
     end
   },
+  -- }}}
+
+  -- mini.icons {{{
+  { 'echasnovski/mini.icons', version = false },
   -- }}}
 
   -- scroll-bar (disabled - doesn't work well with GUIs) {{{
@@ -383,7 +421,6 @@ return {
     dependencies = {
       { 'nvim-treesitter/nvim-treesitter', lazy = true },
     },
-    event = 'VeryLazy',
     config = function()
       require "extensions.orgmode"
     end
@@ -444,17 +481,18 @@ return {
 
   -- color themes {{{
   {
+    -- DEFAULT --
     "catppuccin/nvim",
     name = "catppuccin",
     priority = 1000,
     lazy = false,
     config = function()
       require "extensions.colorscheme.catppuccin"
+      cmd("color catppuccin-frappe")
     end
   },
 
   {
-    -- DEFAULT
     'mcchrish/zenbones.nvim',
     dependencies = {
       'rktjmp/lush.nvim'
@@ -464,7 +502,7 @@ return {
     config = function()
       -- cmd("color zenwritten")
       -- cmd("color nordbones")
-      cmd("color tokyobones")
+      -- cmd("color tokyobones")
     end
   },
 
@@ -503,7 +541,7 @@ return {
     lazy = false,
     priority = 1000,
     config = function()
-        -- require 'nordic'.load()
+      -- require 'nordic'.load()
     end
   },
 

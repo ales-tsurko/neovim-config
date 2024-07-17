@@ -32,7 +32,7 @@ cmd [[ set completeopt="menuone,preview"]]
 -- UI {{{
 opt.termguicolors = true -- Enable 24-bit RGB colors
 opt.cursorline = true    -- Highlight current line
-opt.number = false        -- line numbers
+opt.number = false       -- line numbers
 opt.laststatus = 3       -- Single status line
 opt.signcolumn = "yes:2" -- Always show sign column
 opt.guifont = "Iosevka Nerd Font Mono:14"
@@ -48,7 +48,6 @@ cmd [[ set mousemoveevent ]]
 opt.statuscolumn = "%s%=%T%r%l   %T"
 opt.background = "dark"
 opt.conceallevel = 2
-opt.concealcursor = "nv"
 -- }}}
 
 -- Optimizations {{{
@@ -99,6 +98,10 @@ cmd [[au FileType vimwiki setlocal nonumber]]
 cmd [[au FileType vimwiki setlocal wrap]]
 cmd [[au FileType vimwiki setlocal tw=80]]
 cmd [[au FileType vimwiki setlocal spell]]
+-- org
+cmd [[au FileType org setlocal nonumber]]
+cmd [[au FileType org setlocal wrap]]
+cmd [[au FileType org setlocal tw=80]]
 -- c/c++
 cmd [[au FileType c setlocal tw=80]]
 cmd [[au FileType cpp setlocal tw=80]]

@@ -23,6 +23,10 @@ im('<Leader>ff', '<cmd>Telescope live_grep <CR>', 'Find string (live grep previe
 im('<Leader>fs', '<cmd>Telescope current_buffer_fuzzy_find<CR>', 'Find string in the current buffer.')
 -- }}}
 
+-- find and replace {{{ 
+nm('<C-s>', '<cmd>GrugFar<CR>', 'Find and replace');
+-- }}}
+
 -- buffers {{{
 nm('<C-l>', '<cmd>BufferLineCycleNext<CR>', 'Switch to the next buffer.')
 nm('<C-h>', '<cmd>BufferLineCyclePrev<CR>', 'Switch to the previous buffer.')
@@ -44,6 +48,9 @@ vim.api.nvim_set_keymap('n', '<C-k>', 'zk', { noremap = true, silent = true, des
 -- }}}
 
 -- Help {{{
+vim.keymap.set("n", "<leader>?", function()
+  require("which-key").show({ global = false })
+end, { noremap = true, silent = true, desc = "Buffer Local Keymaps (which-key)" })
 nm('<leader>dk', '<cmd>Telescope keymaps<CR>', 'Show keymaps.')
 im('<leader>dk', '<cmd>Telescope keymaps<CR>', 'Show keymaps.')
 nm('<leader>ds', '<cmd>Telescope help_tags<CR>', 'Search documentation (by tags).')
@@ -53,10 +60,10 @@ im('<leader>dg', '<cmd>Telescope helpgrep<CR>', 'Grep documentation.')
 -- }}}
 
 -- diagnostics {{{
-nm('<leader>xx', '<cmd>TroubleToggle<CR>', 'Show diagnostics.') -- Show all problems in project (with help of LSP)
+nm('<leader>xx', '<cmd>Trouble diagnostics<CR>', 'Show diagnostics.') -- Show all problems in project (with help of LSP)
 nm('<Leader>xn', 'vim.diagnostic.goto_prev', 'Go to previous error or warning.')
 nm('<Leader>xp', 'vim.diagnostic.goto_next', 'Go to next error or warning.')
-im('<leader>xx', '<cmd>TroubleToggle<CR>', 'Show diagnostics.') -- Show all problems in project (with help of LSP)
+im('<leader>xx', '<cmd>Trouble diagnostics<CR>', 'Show diagnostics.') -- Show all problems in project (with help of LSP)
 im('<Leader>xn', 'vim.diagnostic.goto_prev', 'Go to previous error or warning.')
 im('<Leader>xp', 'vim.diagnostic.goto_next', 'Go to next error or warning.')
 -- }}}

@@ -1,8 +1,5 @@
 require("which-key").setup({
-    triggers_nowait = {
-        "<Leader>",
-        "<D>",
-    }
+    preset = "modern",
 })
 
 vim.o.timeout = true

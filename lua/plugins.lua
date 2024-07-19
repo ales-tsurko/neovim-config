@@ -37,23 +37,32 @@ return {
   --}}}
 
   -- noice (gui for commandline, messages, etc.) DISABLED {{{
+  -- {
+  --   "folke/noice.nvim",
+  --   -- event = "VeryLazy",
+  --   opts = {
+  --     -- add any options here
+  --   },
+  --   dependencies = {
+  --     -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
+  --     "MunifTanjim/nui.nvim",
+  --     -- OPTIONAL:
+  --     --   `nvim-notify` is only needed, if you want to use the notification view.
+  --     --   If not available, we use `mini` as the fallback
+  --     "rcarriga/nvim-notify",
+  --   },
+  --   config = function()
+  --     require "extensions.noice"
+  --   end
+  -- },
+  -- }}}
+
+  -- figet.nvim - notifications {{{
   {
-    "folke/noice.nvim",
-    -- event = "VeryLazy",
+    "j-hui/fidget.nvim",
     opts = {
-      -- add any options here
+      -- options
     },
-    dependencies = {
-      -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
-      "MunifTanjim/nui.nvim",
-      -- OPTIONAL:
-      --   `nvim-notify` is only needed, if you want to use the notification view.
-      --   If not available, we use `mini` as the fallback
-      "rcarriga/nvim-notify",
-    },
-    config = function()
-      require "extensions.noice"
-    end
   },
   -- }}}
 
@@ -64,6 +73,17 @@ return {
   --     require "extensions.pretty-fold"
   --   end
   -- },
+  -- }}}
+
+  -- nvim-origami: fold/unfold using h/l {{{
+  {
+    "chrisgrieser/nvim-origami",
+    event = "BufReadPost", -- later or on keypress would prevent saving folds
+    opts = {},             -- needed even when using default config
+    config = function()
+      require "extensions.origami"
+    end
+  },
   -- }}}
 
   -- Mason {{{
@@ -334,8 +354,8 @@ return {
     "nvim-lualine/lualine.nvim",
     lazy = false,
     dependencies = {
-      "nvim-tree/nvim-web-devicons",
-      "ecthelionvi/NeoComposer.nvim",
+      'nvim-tree/nvim-web-devicons',
+      'ecthelionvi/NeoComposer.nvim',
     },
     config = function()
       require "extensions.lualine"
@@ -460,14 +480,6 @@ return {
   },
   -- }}}
 
-  -- rust stuff (DISABLED - slows down or makes vim hang) {{{
-  -- {
-  --   'mrcjkb/rustaceanvim',
-  --   version = '^3', -- Recommended
-  --   ft = { 'rust' },
-  -- },
-  -- }}}
-
   -- twilight: dim innactive code (DISABLED) {{{
   {
     "folke/twilight.nvim",
@@ -481,18 +493,18 @@ return {
 
   -- color themes {{{
   {
-    -- DEFAULT --
     "catppuccin/nvim",
     name = "catppuccin",
     priority = 1000,
     lazy = false,
     config = function()
       require "extensions.colorscheme.catppuccin"
-      cmd("color catppuccin-frappe")
+      -- cmd("color catppuccin-frappe")
     end
   },
 
   {
+    -- DEFAULT
     'mcchrish/zenbones.nvim',
     dependencies = {
       'rktjmp/lush.nvim'
@@ -500,7 +512,7 @@ return {
     lazy = false,
     priority = 1000,
     config = function()
-      -- cmd("color zenwritten")
+      cmd("color zenwritten")
       -- cmd("color nordbones")
       -- cmd("color tokyobones")
     end

@@ -12,7 +12,7 @@ mason_lspconfig.setup({
         "rust_analyzer", -- LSP for Rust
         "taplo",         -- LSP for TOML
         "wgsl_analyzer", -- LSP for WebGPU Shading Language
-        "efm", -- general purpose LSP
+        "efm",           -- general purpose LSP
     }
 });
 

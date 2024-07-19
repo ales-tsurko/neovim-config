@@ -23,7 +23,7 @@ im('<Leader>ff', '<cmd>Telescope live_grep <CR>', 'Find string (live grep previe
 im('<Leader>fs', '<cmd>Telescope current_buffer_fuzzy_find<CR>', 'Find string in the current buffer.')
 -- }}}
 
--- find and replace {{{ 
+-- find and replace {{{
 nm('<C-s>', '<cmd>GrugFar<CR>', 'Find and replace');
 -- }}}
 
@@ -87,23 +87,17 @@ im('<Leader>pc', ':SClose<CR>', 'Close current session and open dashboard.')
 -- }}}
 
 -- terminal {{{
-local esc = vim.api.nvim_replace_termcodes(
-  '<ESC>', true, false, true
-)
+function _G.set_terminal_keymaps()
+  local opts = { buffer = 0 }
+  vim.keymap.set('t', '<esc>', [[<C-\><C-n>]], opts)
+  vim.keymap.set('t', '<C-h>', [[<Cmd>wincmd h<CR>]], opts)
+  vim.keymap.set('t', '<C-j>', [[<Cmd>wincmd j<CR>]], opts)
+  vim.keymap.set('t', '<C-k>', [[<Cmd>wincmd k<CR>]], opts)
+  vim.keymap.set('t', '<C-l>', [[<Cmd>wincmd l<CR>]], opts)
+  vim.keymap.set('t', '<C-w>', [[<C-\><C-n><C-w>]], opts)
+end
 
-cmd [[
-    " exit from terminal mode with Esc
-    tnoremap <Esc> <C-\><C-n>
-    " navigate windows with alt+h/j/k/l
-    tnoremap <A-h> <C-\><C-n><C-w>h
-    tnoremap <A-j> <C-\><C-n><C-w>j
-    tnoremap <A-k> <C-\><C-n><C-w>k
-    tnoremap <A-l> <C-\><C-n><C-w>l
-    nnoremap <A-h> <C-w>h
-    nnoremap <A-j> <C-w>j
-    nnoremap <A-k> <C-w>k
-    nnoremap <A-l> <C-w>l
-]]
+vim.cmd('autocmd! TermOpen term://* lua set_terminal_keymaps()')
 -- }}}
 
 -- comments {{{

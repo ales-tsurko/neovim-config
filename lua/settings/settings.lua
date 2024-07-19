@@ -32,7 +32,8 @@ cmd [[ set completeopt="menuone,preview"]]
 -- UI {{{
 opt.termguicolors = true -- Enable 24-bit RGB colors
 opt.cursorline = true    -- Highlight current line
-opt.number = false       -- line numbers
+opt.startofline = true   -- move the cursor to the first non-blank of the line for specific commands
+opt.number = true       -- line numbers
 opt.laststatus = 3       -- Single status line
 opt.signcolumn = "yes:2" -- Always show sign column
 opt.guifont = "Iosevka Nerd Font Mono:14"
@@ -46,7 +47,7 @@ opt.mouse = "a"
 cmd [[ set mousemoveevent ]]
 -- custom statuscolumn to add more space after the line number
 opt.statuscolumn = "%s%=%T%r%l   %T"
-opt.background = "dark"
+opt.background = "light"
 opt.conceallevel = 2
 -- }}}
 

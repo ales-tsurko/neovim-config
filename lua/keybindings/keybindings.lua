@@ -14,7 +14,8 @@ im('<leader><leader>', '<cmd>Telescope<CR>', 'Open Telescope.')
 -- }}}
 
 -- files {{{
-nm('<A-Tab>', '<cmd>Neotree position=top toggle<CR>', 'Toggle file explorer.') -- Toggle file explorer
+-- nm('<A-Tab>', '<cmd>Neotree position=top toggle<CR>', 'Toggle file explorer.') -- Toggle file explorer
+nm('<A-Tab>', '<cmd>OilToggle<CR>', 'Toggle file explorer.') -- Toggle file explorer
 nm('<Leader>fo', '<cmd>Telescope frecency workspace=CWD<CR>', 'Find files.')
 nm('<Leader>ff', '<cmd>Telescope live_grep <CR>', 'Find string (live grep preview).')
 nm('<Leader>fs', '<cmd>Telescope current_buffer_fuzzy_find<CR>', 'Find string in the current buffer.')
@@ -101,18 +102,17 @@ vim.cmd('autocmd! TermOpen term://* lua set_terminal_keymaps()')
 -- }}}
 
 -- comments {{{
-vim.keymap.set("n", "<C-;>", function()
-  require('Comment.api').toggle.linewise.current()
-end, { noremap = true, silent = true, desc = 'Toggle comment.' })
-vim.keymap.set("i", "<C-;>", function()
-  require('Comment.api').toggle.linewise.current()
-end, { noremap = true, silent = true, desc = 'Toggle comment.' })
-
-
-vim.keymap.set('x', '<C-;>', function()
-  vim.api.nvim_feedkeys(esc, 'nx', false)
-  require('Comment.api').toggle.linewise(vim.fn.visualmode())
-end, { noremap = true, silent = true, desc = 'Toggle comment.' })
+require('Comment').setup({
+  ignore = '^$',
+  toggler = {
+    line = '<C-;>',
+    block = '<C-/>',
+  },
+  opleader = {
+    line = '<C-;>',
+    block = '<C-/>',
+  },
+})
 -- }}}
 
 -- vimwiki {{{

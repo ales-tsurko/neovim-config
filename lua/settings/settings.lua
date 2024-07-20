@@ -45,6 +45,7 @@ cmd [[set colorcolumn=+1]] -- Show vertical line width line
 cmd [[ set mousescroll=ver:1,hor:1]]
 opt.mouse = "a"
 cmd [[ set mousemoveevent ]]
+cmd [[ set splitkeep=screen ]] -- stabilize window behavior
 -- custom statuscolumn to add more space after the line number
 opt.statuscolumn = "%s%=%T%r%l   %T"
 opt.background = "light"
@@ -132,6 +133,8 @@ cmd [[au FileType yaml setlocal shiftwidth=2]]
 cmd [[autocmd FileType gitcommit,gitrebase,gitconfig set bufhidden=delete]]
 -- slint
 cmd [[au FileType slint setlocal tw=0]]
+-- oil (file browser)
+cmd [[au FileType oil setlocal nonumber]]
 -- }}}
 
 -- neovide {{{
@@ -162,7 +165,6 @@ cmd [[nnoremenu PopUp.Select\ All                 ggVG]]
 cmd [[vnoremenu PopUp.Select\ All                 gg0oG$]]
 cmd [[inoremenu PopUp.Select\ All                 <C-Home><C-O>VG]]
 cmd [[anoremenu PopUp.-1-                         <Nop>]]
-cmd [[nnoremenu PopUp.Rust:\ Expand\ Macro <Cmd>RustLsp expandMacro<CR>]]
 -- }}}
 
 -- sessions {{{

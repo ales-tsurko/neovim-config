@@ -12,9 +12,7 @@ return {
   -- {
   --   "glepnir/dashboard-nvim",
   --   event = 'VimEnter',
-  --   config = function()
-  --     require "extensions.dashboard"
-  --   end,
+  --   config = true,
   --   dependencies = "nvim-tree/nvim-web-devicons"
   -- },
 
@@ -140,18 +138,31 @@ return {
   -- },
   -- }}}
 
-  -- neo-tree file, symbols browser {{{
+  -- neo-tree file, symbols browser - DISABLED in favour of oil {{{
+  -- {
+  --   "nvim-neo-tree/neo-tree.nvim",
+  --   branch = "v3.x",
+  --   dependencies = {
+  --     "nvim-lua/plenary.nvim",
+  --     "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
+  --     "MunifTanjim/nui.nvim",
+  --     "3rd/image.nvim",              -- Optional image support in preview window: See `# Preview Mode` for more information
+  --   },
+  --   config = function()
+  --     require "extensions.neotree"
+  --   end
+  -- },
+  -- }}}
+
+  -- oil - file browser as a simple buffer {{{
   {
-    "nvim-neo-tree/neo-tree.nvim",
-    branch = "v3.x",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
-      "MunifTanjim/nui.nvim",
-      -- "3rd/image.nvim",              -- Optional image support in preview window: See `# Preview Mode` for more information
-    },
+    'stevearc/oil.nvim',
+    opts = {},
+    -- Optional dependencies
+    dependencies = { { "echasnovski/mini.icons", opts = {} } },
+    -- dependencies = { "nvim-tree/nvim-web-devicons" }, -- use if prefer nvim-web-devicons
     config = function()
-      require "extensions.neotree"
+      require "extensions.oil"
     end
   },
   -- }}}
@@ -185,16 +196,6 @@ return {
     },
     config = function()
       require "extensions.telescope"
-    end
-  },
-  -- }}}
-
-  -- NeoComposer (macro manager) {{{
-  {
-    "ecthelionvi/NeoComposer.nvim",
-    dependencies = { "kkharji/sqlite.lua" },
-    config = function()
-      require("NeoComposer").setup()
     end
   },
   -- }}}
@@ -363,6 +364,14 @@ return {
   },
   -- }}}
 
+  -- incline - floating statusline {{{
+  {
+    'b0o/incline.nvim',
+    config = true,
+    event = 'VeryLazy',
+  },
+  -- }}}
+
   -- bufferline {{{
   {
     "akinsho/bufferline.nvim",
@@ -395,17 +404,6 @@ return {
 
   -- mini.icons {{{
   { 'echasnovski/mini.icons', version = false },
-  -- }}}
-
-  -- scroll-bar (disabled - doesn't work well with GUIs) {{{
-  -- {
-  --   "petertriho/nvim-scrollbar",
-  --   lazy = false,
-  --   enabled = not (vim.g.GuiLoaded or vim.fn.exists('$NVIM_GUI') == 1),
-  --   config = function()
-  --     require "extensions.scrollbar"
-  --   end
-  -- },
   -- }}}
 
   -- preview colors {{{
@@ -471,6 +469,17 @@ return {
   -- language: slint {{{
   {
     "slint-ui/vim-slint"
+  },
+  -- }}}
+
+  -- markdown preview {{{
+  {
+    'MeanderingProgrammer/markdown.nvim',
+    name = 'render-markdown',                                                       -- Only needed if you have another plugin named markdown.nvim
+    dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.icons' }, -- if you use standalone mini plugins
+    config = function()
+      require('render-markdown').setup({})
+    end,
   },
   -- }}}
 

@@ -24,7 +24,7 @@ local function oil_toggle()
 
   if oil_winid then
     -- If oil window exists, close it
-    vim.api.nvim_win_close(oil_winid, true)
+    vim.api.nvim_win_close(oil_winid, false)
   else
     original_win = vim.api.nvim_get_current_win()
 
@@ -40,17 +40,42 @@ local function oil_toggle()
   end
 end
 
+local function close_all_oil_wins()
+  local windows_to_close = {}
+
+  for _, win in ipairs(vim.api.nvim_list_wins()) do
+    local buf = vim.api.nvim_win_get_buf(win)
+    if vim.bo[buf].filetype == 'oil' then
+      table.insert(windows_to_close, win)
+    end
+  end
+
+  for _, win in ipairs(windows_to_close) do
+    vim.api.nvim_win_close(win, false)
+  end
+end
+
 local function select_file()
   oil.select({ close = true }, function()
     local new_bufnr = vim.api.nvim_get_current_buf()
+
+    -- do nothing with folders
+    if vim.bo[new_bufnr].filetype == 'oil' then
+      return
+    end
+
     local current_win = vim.api.nvim_get_current_win()
 
     -- Switch to the original window and set its buffer to the newly
     -- opened file
     if original_win and vim.api.nvim_win_is_valid(original_win) then
       vim.api.nvim_win_set_buf(original_win, new_bufnr)
-      vim.api.nvim_win_close(current_win, true)
+      vim.api.nvim_win_close(current_win, false)
       vim.api.nvim_set_current_win(original_win)
+      -- FIXME this doesn't work. in case you open a folder in a preview window 
+      -- and then open a file in it, only the preview window is closed, but the 
+      -- main oil window remains open
+      close_all_oil_wins()
     else
       print("Unexpectedly got invalid target window")
     end

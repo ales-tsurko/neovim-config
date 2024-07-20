@@ -472,6 +472,16 @@ return {
   },
   -- }}}
 
+  -- crates.nvim - a plugin to work with crates.io {{{
+  {
+    'saecki/crates.nvim',
+    tag = 'stable',
+    config = function()
+      require('crates').setup()
+    end,
+  },
+  -- }}}
+
   -- markdown preview {{{
   {
     'MeanderingProgrammer/markdown.nvim',

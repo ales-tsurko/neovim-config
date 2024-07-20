@@ -33,7 +33,7 @@ cmd [[ set completeopt="menuone,preview"]]
 opt.termguicolors = true -- Enable 24-bit RGB colors
 opt.cursorline = true    -- Highlight current line
 opt.startofline = true   -- move the cursor to the first non-blank of the line for specific commands
-opt.number = true       -- line numbers
+opt.number = true        -- line numbers
 opt.laststatus = 3       -- Single status line
 opt.signcolumn = "yes:2" -- Always show sign column
 opt.guifont = "Iosevka Nerd Font Mono:14"
@@ -165,6 +165,16 @@ cmd [[nnoremenu PopUp.Select\ All                 ggVG]]
 cmd [[vnoremenu PopUp.Select\ All                 gg0oG$]]
 cmd [[inoremenu PopUp.Select\ All                 <C-Home><C-O>VG]]
 cmd [[anoremenu PopUp.-1-                         <Nop>]]
+
+-- crates.nvim menu entries
+cmd [[au FileType toml anoremenu PopUp.Crates\ Info <cmd>Crates show_popup<CR>]]
+cmd [[au FileType toml anoremenu PopUp.Crates\ Features <cmd>Crates show_features_popup<CR>]]
+cmd [[au FileType toml anoremenu PopUp.Crates\ Update <cmd>Crates update_crate<CR>]]
+cmd [[au FileType toml anoremenu PopUp.Crates\ Upgrade <cmd>Crates upgrade_crate<CR>]]
+cmd [[au FileType toml anoremenu PopUp.Crates\ Show\ Dependencies <cmd>Crates show_dependencies_popup<CR>]]
+cmd [[au FileType toml anoremenu PopUp.Crates\ Open\ Documentation <cmd>Crates open_documentation<CR>]]
+cmd [[au FileType toml anoremenu PopUp.Crates\ Update\ All <cmd>Crates update_all_crates<CR>]]
+cmd [[au FileType toml anoremenu PopUp.Crates\ Upgrade\ All <cmd>Crates upgrade_all_crates<CR>]]
 -- }}}
 
 -- sessions {{{

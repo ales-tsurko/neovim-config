@@ -1,43 +1,58 @@
 local oil = require('oil')
+local oil_util = require('oil.util')
 
 -- {{{
 -- Create custom command for toggling oil in a horizontal split
 local original_win = nil
 
 local function find_oil_win()
-  local oil_winid = nil
-
   for _, win in ipairs(vim.api.nvim_list_wins()) do
     local buf = vim.api.nvim_win_get_buf(win)
     if vim.bo[buf].filetype == 'oil' then
-      oil_winid = win
-      break
+      return win
     end
   end
-
-  return oil_winid
 end
 
--- make OilToggle command which will toggle oil at the top split
-local function oil_toggle()
+local function oil_try_close()
   local oil_winid = find_oil_win()
 
   if oil_winid then
     -- If oil window exists, close it
+    -- we should call this as well, because simple window close (i.e. via api) 
+    -- closes only preview sometimes
+    oil.close()
     vim.api.nvim_win_close(oil_winid, false)
-  else
-    original_win = vim.api.nvim_get_current_win()
-
-    -- If oil window doesn't exist, create it at the top
-    vim.cmd('topleft split')
-    oil.open()
-    require('oil.util').run_after_load(0, function()
-      oil.open_preview()
-    end)
-
-    -- Resize the window to a smaller height (e.g., 15 lines)
-    vim.cmd('resize 20')
+    return true
   end
+
+  return false
+end
+
+-- make OilToggle command which will toggle oil at the top split
+local function oil_toggle()
+  if oil_try_close() then
+    return
+  end
+
+  original_win = vim.api.nvim_get_current_win()
+
+  -- If oil window doesn't exist, create it at the top
+  vim.cmd('topleft split')
+  oil.open()
+  vim.wait(1000, function()
+    return oil.get_cursor_entry() ~= nil
+  end)
+  if oil.get_cursor_entry() then
+    oil.open_preview()
+  end
+  -- this doesn't work for parent dirs ¯\_(ツ)_/¯
+  -- require('oil.util').run_after_load(0, function()
+  --     oil.open_preview()
+  -- end)
+
+  -- Resize the window to a smaller height (e.g., 15 lines)
+  vim.cmd('resize 20')
 end
 
 local function close_all_oil_wins()
@@ -55,8 +70,8 @@ local function close_all_oil_wins()
   end
 end
 
-local function select_file()
-  oil.select({ close = true }, function()
+local function select_item()
+  oil.select({ close = false }, function()
     local new_bufnr = vim.api.nvim_get_current_buf()
 
     -- do nothing with folders
@@ -72,8 +87,8 @@ local function select_file()
       vim.api.nvim_win_set_buf(original_win, new_bufnr)
       vim.api.nvim_win_close(current_win, false)
       vim.api.nvim_set_current_win(original_win)
-      -- FIXME this doesn't work. in case you open a folder in a preview window 
-      -- and then open a file in it, only the preview window is closed, but the 
+      -- FIXME this doesn't work. in case you open a folder in a preview window
+      -- and then open a file in it, only the preview window is closed, but the
       -- main oil window remains open
       close_all_oil_wins()
     else
@@ -110,12 +125,12 @@ oil.setup({
   -- See :help oil-actions for a list of all available actions
   keymaps = {
     ["g?"] = "actions.show_help",
-    ["<CR>"] = select_file,
+    ["<CR>"] = select_item,
     ["<C-s>"] = { "actions.select", opts = { vertical = true }, desc = "Open the entry in a vertical split" },
     ["<C-h>"] = { "actions.select", opts = { horizontal = true }, desc = "Open the entry in a horizontal split" },
     ["<C-t>"] = { "actions.select", opts = { tab = true }, desc = "Open the entry in new tab" },
     ["<C-p>"] = "actions.preview",
-    ["<C-c>"] = "actions.close",
+    ["q"] = oil_try_close,
     ["<C-l>"] = "actions.refresh",
     ["-"] = "actions.parent",
     ["_"] = "actions.open_cwd",

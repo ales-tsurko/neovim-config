@@ -1,7 +1,6 @@
 --[[
   File: settings.lua
   Description: Base settings for neovim
-  Info: Use <zo> and <zc> to open and close foldings
 ]]
 
 require "../helpers/globals"

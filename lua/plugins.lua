@@ -64,15 +64,6 @@ return {
   },
   -- }}}
 
-  -- pretty-fold: better foldings {{{
-  -- {
-  --   'anuvyklack/pretty-fold.nvim',
-  --   config = function()
-  --     require "extensions.pretty-fold"
-  --   end
-  -- },
-  -- }}}
-
   -- nvim-origami: fold/unfold using h/l {{{
   {
     "chrisgrieser/nvim-origami",
@@ -127,6 +118,16 @@ return {
     end
   },
   --}}}
+
+  -- spider - move subwords {{{
+  {
+    "chrisgrieser/nvim-spider",
+    lazy = true,
+    config = function()
+      require "extensions.spider"
+    end
+  },
+  -- }}}
 
   -- indent-blankline (DISABLED) {{{
   -- {

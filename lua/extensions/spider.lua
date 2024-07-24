@@ -1,0 +1,2 @@
+require("spider").setup()
+

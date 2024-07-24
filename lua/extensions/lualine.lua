@@ -4,6 +4,27 @@
   See: https://github.com/nvim-lualine/lualine.nvim
 ]]
 
+local function toggle_background()
+    if vim.o.background == 'dark' then
+        vim.o.background = 'light'
+    else
+        vim.o.background = 'dark'
+    end
+end
+
+-- Lualine component for background toggle
+local background_component = {
+    function()
+        local icon = vim.o.background == 'dark' and '󰌶' or '󰌵'
+        return icon
+    end,
+    color = { gui = 'bold' },
+    on_click = function()
+        toggle_background()
+        require('lualine').refresh()
+    end,
+}
+
 local function cwd()
     local current_directory = vim.fn.getcwd()
     return vim.fn.fnamemodify(current_directory, ":t")
@@ -65,6 +86,7 @@ require('lualine').setup({
         },
         lualine_z = {
             "location",
+            background_component,
         }
     },
     options = {
@@ -72,4 +94,11 @@ require('lualine').setup({
         component_separators = { '', '' },
         section_separators = { '', '' }
     },
+})
+
+vim.api.nvim_create_autocmd("OptionSet", {
+    pattern = "background",
+    callback = function()
+        require('lualine').refresh()
+    end,
 })

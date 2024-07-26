@@ -165,15 +165,15 @@ cmd [[vnoremenu PopUp.Select\ All                 gg0oG$]]
 cmd [[inoremenu PopUp.Select\ All                 <C-Home><C-O>VG]]
 cmd [[anoremenu PopUp.-1-                         <Nop>]]
 
--- crates.nvim menu entries
-cmd [[au FileType toml anoremenu PopUp.Crates\ Info <cmd>Crates show_popup<CR>]]
-cmd [[au FileType toml anoremenu PopUp.Crates\ Features <cmd>Crates show_features_popup<CR>]]
-cmd [[au FileType toml anoremenu PopUp.Crates\ Update <cmd>Crates update_crate<CR>]]
-cmd [[au FileType toml anoremenu PopUp.Crates\ Upgrade <cmd>Crates upgrade_crate<CR>]]
-cmd [[au FileType toml anoremenu PopUp.Crates\ Show\ Dependencies <cmd>Crates show_dependencies_popup<CR>]]
-cmd [[au FileType toml anoremenu PopUp.Crates\ Open\ Documentation <cmd>Crates open_documentation<CR>]]
-cmd [[au FileType toml anoremenu PopUp.Crates\ Update\ All <cmd>Crates update_all_crates<CR>]]
-cmd [[au FileType toml anoremenu PopUp.Crates\ Upgrade\ All <cmd>Crates upgrade_all_crates<CR>]]
+-- crates.nvim menu entries - the plugin is disabled
+-- cmd [[au FileType toml anoremenu PopUp.Crates\ Info <cmd>Crates show_popup<CR>]]
+-- cmd [[au FileType toml anoremenu PopUp.Crates\ Features <cmd>Crates show_features_popup<CR>]]
+-- cmd [[au FileType toml anoremenu PopUp.Crates\ Update <cmd>Crates update_crate<CR>]]
+-- cmd [[au FileType toml anoremenu PopUp.Crates\ Upgrade <cmd>Crates upgrade_crate<CR>]]
+-- cmd [[au FileType toml anoremenu PopUp.Crates\ Show\ Dependencies <cmd>Crates show_dependencies_popup<CR>]]
+-- cmd [[au FileType toml anoremenu PopUp.Crates\ Open\ Documentation <cmd>Crates open_documentation<CR>]]
+-- cmd [[au FileType toml anoremenu PopUp.Crates\ Update\ All <cmd>Crates update_all_crates<CR>]]
+-- cmd [[au FileType toml anoremenu PopUp.Crates\ Upgrade\ All <cmd>Crates upgrade_all_crates<CR>]]
 -- }}}
 
 -- sessions {{{

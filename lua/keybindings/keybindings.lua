@@ -120,27 +120,6 @@ nm('<leader>tt', '<cmd>VimwikiToggleListItem<CR>', 'Vimwiki: toggle todo list it
 im('<leader>tt', '<cmd>VimwikiToggleListItem<CR>', 'Vimwiki: toggle todo list item.')
 -- }}}
 
--- spider -- subword movements {{{
-vim.keymap.set(
-  { "n", "o", "x" },
-  "w",
-  "<cmd>lua require('spider').motion('w')<CR>",
-  { desc = "Spider-w" }
-)
-vim.keymap.set(
-  { "n", "o", "x" },
-  "e",
-  "<cmd>lua require('spider').motion('e')<CR>",
-  { desc = "Spider-e" }
-)
-vim.keymap.set(
-  { "n", "o", "x" },
-  "b",
-  "<cmd>lua require('spider').motion('b')<CR>",
-  { desc = "Spider-b" }
-)
--- }}}
-
 -- other {{{
 -- Use LspAttach autocommand to only map the following keys
 -- after the language server attaches to the current buffer

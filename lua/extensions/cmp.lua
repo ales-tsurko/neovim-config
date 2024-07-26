@@ -28,8 +28,7 @@ cmp.setup {
 
     completion = {
         keyword_length = 1,
-        completeopt = 'menuone,preview',
-    },
+        completeopt = 'menuone,popup' },
 
     sources = cmp.config.sources({
         { name = 'nvim_lsp' },                -- LSP
@@ -58,11 +57,11 @@ cmp.setup {
     window = {
         completion = {
             border = 'solid',
-            -- side_padding = 3,
+            -- side_padding = 3, -- hides icons
             scrollbar = true,
         },
         documentation = {
-            border = 'shadow',
+            border = 'solid',
         },
     },
     experimental = {
@@ -71,7 +70,8 @@ cmp.setup {
 }
 
 -- command line completions
-cmp.setup.cmdline('/', {
+cmp.setup.cmdline({ '/', '?' }, {
+    completion = { completeopt = 'menuone,popup,noselect' },
     mapping = cmp.mapping.preset.cmdline(),
     sources = {
         { name = 'buffer' }
@@ -79,6 +79,7 @@ cmp.setup.cmdline('/', {
 })
 
 cmp.setup.cmdline(':', {
+    completion = { completeopt = 'menuone,popup,noselect' },
     mapping = cmp.mapping.preset.cmdline(),
     sources = cmp.config.sources({
         { name = 'path' }

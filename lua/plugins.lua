@@ -119,16 +119,6 @@ return {
   },
   --}}}
 
-  -- spider - move subwords {{{
-  {
-    "chrisgrieser/nvim-spider",
-    lazy = true,
-    config = function()
-      require "extensions.spider"
-    end
-  },
-  -- }}}
-
   -- indent-blankline (DISABLED) {{{
   -- {
   --   'lukas-reineke/indent-blankline.nvim',
@@ -368,7 +358,9 @@ return {
   -- incline - floating statusline {{{
   {
     'b0o/incline.nvim',
-    config = true,
+    config = function ()
+      require "extensions.incline"
+    end,
     event = 'VeryLazy',
   },
   -- }}}
@@ -473,14 +465,14 @@ return {
   },
   -- }}}
 
-  -- crates.nvim - a plugin to work with crates.io {{{
-  {
-    'saecki/crates.nvim',
-    tag = 'stable',
-    config = function()
-      require('crates').setup()
-    end,
-  },
+  -- crates.nvim - a plugin to work with crates.io - DISABLED - too slow for big projects {{{
+  -- {
+  --   'saecki/crates.nvim',
+  --   tag = 'stable',
+  --   config = function()
+  --     require('crates').setup()
+  --   end,
+  -- },
   -- }}}
 
   -- markdown preview {{{

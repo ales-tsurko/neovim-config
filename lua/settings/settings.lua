@@ -4,7 +4,7 @@
 ]]
 
 require "../helpers/globals"
-require "settings/project_config"
+-- require "settings/project_config"
 
 
 -- Set associating between turned on plugins and filetype
@@ -26,6 +26,7 @@ opt.spelllang = "en_us,ru_ru" -- Set spell language
 opt.wrap = false              -- Disable word wrap
 opt.scrolloff = 999           -- Keep cursor always in the middle
 cmd [[ set completeopt="menuone,preview"]]
+cmd [[ nnoremap * :keepjumps normal! mi*`i<CR> ]] -- prevent "super star" jumps
 -- }}}
 
 -- UI {{{
@@ -35,7 +36,7 @@ opt.startofline = true   -- move the cursor to the first non-blank of the line f
 opt.number = true        -- line numbers
 opt.laststatus = 3       -- Single status line
 opt.signcolumn = "yes:2" -- Always show sign column
-opt.guifont = "Iosevka Nerd Font Mono:14"
+opt.guifont = "Iosevka Nerd Font Mono:13"
 cmd [[set fillchars=eob:\ ]]
 opt.foldnestmax = 3
 opt.foldminlines = 1
@@ -47,7 +48,7 @@ cmd [[ set mousemoveevent ]]
 cmd [[ set splitkeep=screen ]] -- stabilize window behavior
 -- custom statuscolumn to add more space after the line number
 opt.statuscolumn = "%s%=%T%r%l   %T"
-opt.background = "light"
+opt.background = "dark"
 opt.conceallevel = 2
 -- }}}
 

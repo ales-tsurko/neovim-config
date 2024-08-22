@@ -2,8 +2,12 @@ require "../helpers/globals"
 require "../helpers/keyboard"
 require "keybindings/nomode_like"
 
+-- editing {{{ 
 -- prevent moving cursor when yanking (copying)
 vm('y', 'ygv<Esc>', "yank")
+-- make insert work as expected in visual mode
+vm('i', 'I', "insert")
+-- }}}
 
 -- Open Telescope.
 nm('<leader><leader>', '<cmd>Telescope<CR>', 'Open Telescope.')

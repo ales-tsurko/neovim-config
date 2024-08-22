@@ -116,7 +116,8 @@ oil.setup({
   -- Skip the confirmation popup for simple operations (:help oil.skip_confirm_for_simple_edits)
   skip_confirm_for_simple_edits = true,
   -- Set to true to watch the filesystem for changes and reload oil
-  watch_for_changes = true,
+  -- disabled, because it's buggy
+  watch_for_changes = false,
   -- Keymaps in oil buffer. Can be any value that `vim.keymap.set` accepts OR a table of keymap
   -- options with a `callback` (e.g. { callback = function() ... end, desc = "", mode = "n" })
   -- Additionally, if it is a string that matches "actions.<name>",

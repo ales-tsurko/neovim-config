@@ -129,7 +129,7 @@ return {
   -- },
   -- }}}
 
-  -- neo-tree file, symbols browser - DISABLED in favour of oil {{{
+  -- neo-tree file, symbols browser {{{
   -- {
   --   "nvim-neo-tree/neo-tree.nvim",
   --   branch = "v3.x",
@@ -358,7 +358,7 @@ return {
   -- incline - floating statusline {{{
   {
     'b0o/incline.nvim',
-    config = function ()
+    config = function()
       require "extensions.incline"
     end,
     event = 'VeryLazy',
@@ -416,14 +416,14 @@ return {
   --}}}
 
   -- neophyte (config for wgpu-based neovim frontend) (DISABLED breaks neovim 0.10) {{{
-  -- {
-  --   'tim-harding/neophyte',
-  --   tag = '0.2.2',
-  --   event = 'VeryLazy',
-  --   config = function()
-  --     require "extensions.neophyte"
-  --   end
-  -- },
+  {
+    'tim-harding/neophyte',
+    tag = '0.2.2',
+    event = 'VeryLazy',
+    config = function()
+      require "extensions.neophyte"
+    end
+  },
   -- }}}
 
   -- org-mode {{{
@@ -505,18 +505,18 @@ return {
 
   -- color themes {{{
   {
+    -- DEFAULT
     "catppuccin/nvim",
     name = "catppuccin",
     priority = 1000,
     lazy = false,
     config = function()
       require "extensions.colorscheme.catppuccin"
-      -- cmd("color catppuccin-frappe")
+      cmd("color catppuccin")
     end
   },
 
   {
-    -- DEFAULT
     'mcchrish/zenbones.nvim',
     dependencies = {
       'rktjmp/lush.nvim'
@@ -524,7 +524,7 @@ return {
     lazy = false,
     priority = 1000,
     config = function()
-      cmd("color zenwritten")
+      -- cmd("color zenwritten")
       -- cmd("color nordbones")
       -- cmd("color tokyobones")
     end

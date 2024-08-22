@@ -20,8 +20,8 @@ neophyte.setup({
     -- 'Noto Color Emoji',
   },
   font_size = {
-    kind = 'width', -- 'width' | 'height'
-    size = 11,
+    kind = 'height', -- 'width' | 'height'
+    size = 13,
   },
   -- Multipliers of the base animation speed.
   -- To disable animations, set these to large values like 1000.

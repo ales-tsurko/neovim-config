@@ -12,4 +12,4 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 -- set leader key
-vim.cmd [[ let mapleader = "\<S-Space>"]] -- Use Space, like key for alternative hotkeys
+vim.cmd [[ let mapleader = "\<C-Space>"]] -- Use Space, like key for alternative hotkeys

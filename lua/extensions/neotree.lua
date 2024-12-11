@@ -1,4 +1,10 @@
 require("neo-tree").setup({
+    window = {
+        mappings = {
+            ["<C-l>"] = "next_source",
+            ["<C-h>"] = "prev_source",
+        }
+    },
     sources = {
         "filesystem",
         "buffers",

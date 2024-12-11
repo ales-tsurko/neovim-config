@@ -129,20 +129,27 @@ return {
   -- },
   -- }}}
 
+  -- image.nvim - preview images (where supported) {{{
+  {
+    "3rd/image.nvim",
+    opts = {}
+  },
+  -- }}}
+
   -- neo-tree file, symbols browser {{{
-  -- {
-  --   "nvim-neo-tree/neo-tree.nvim",
-  --   branch = "v3.x",
-  --   dependencies = {
-  --     "nvim-lua/plenary.nvim",
-  --     "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
-  --     "MunifTanjim/nui.nvim",
-  --     "3rd/image.nvim",              -- Optional image support in preview window: See `# Preview Mode` for more information
-  --   },
-  --   config = function()
-  --     require "extensions.neotree"
-  --   end
-  -- },
+  {
+    "nvim-neo-tree/neo-tree.nvim",
+    branch = "v3.x",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
+      "MunifTanjim/nui.nvim",
+      "3rd/image.nvim",              -- Optional image support in preview window: See `# Preview Mode` for more information
+    },
+    config = function()
+      require "extensions.neotree"
+    end
+  },
   -- }}}
 
   -- oil - file browser as a simple buffer {{{
@@ -191,6 +198,12 @@ return {
   },
   -- }}}
 
+  -- better quickfix {{{
+  {
+    'kevinhwang91/nvim-bqf'
+  },
+  -- }}}
+
   -- CMP {{{
   {
     'hrsh7th/nvim-cmp',
@@ -215,15 +228,15 @@ return {
   },
   -- }}}
 
-  -- Codeium {{{
-  {
-    "Exafunction/codeium.nvim",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      "hrsh7th/nvim-cmp",
-    },
-    config = true,
-  },
+  -- Codeium - DISABLED - causes to much issues {{{
+  -- {
+  --   "Exafunction/codeium.nvim",
+  --   dependencies = {
+  --     "nvim-lua/plenary.nvim",
+  --     "hrsh7th/nvim-cmp",
+  --   },
+  --   config = true,
+  -- },
   -- }}}
 
   -- autopairs {{{
@@ -254,9 +267,17 @@ return {
   -- }}}
 
   -- find and replace {{{
+  -- {
+  --   'MagicDuck/grug-far.nvim',
+  --   config = true,
+  -- },
   {
-    'MagicDuck/grug-far.nvim',
-    config = true,
+    "nvim-pack/nvim-spectre",
+    dependencies = {
+      {
+        "nvim-lua/plenary.nvim"
+      }
+    }
   },
   -- {
   --   'brooth/far.vim',
@@ -465,6 +486,12 @@ return {
   },
   -- }}}
 
+  -- language: koto {{{
+  {
+    "koto-lang/koto.vim"
+  },
+  -- }}}
+
   -- crates.nvim - a plugin to work with crates.io - DISABLED - too slow for big projects {{{
   -- {
   --   'saecki/crates.nvim',
@@ -505,14 +532,13 @@ return {
 
   -- color themes {{{
   {
-    -- DEFAULT
     "catppuccin/nvim",
     name = "catppuccin",
     priority = 1000,
     lazy = false,
     config = function()
       require "extensions.colorscheme.catppuccin"
-      cmd("color catppuccin")
+      -- cmd("color catppuccin")
     end
   },
 
@@ -570,14 +596,15 @@ return {
   },
 
   {
+    -- DEFAULT
     "olimorris/onedarkpro.nvim",
     lazy = false,
     priority = 1000,
     config = function()
-      -- cmd("color onedarkpro")
+      cmd("color onedark")
     end
   },
   -- }}}
 }
 
--- vim:tabstop=2 shiftwidth=2 expandtab syntax=lua foldmethod=marker foldlevelstart=0
+-- vim:tabstop=2 shiftwidth=2 syntax=lua foldmethod=marker foldlevelstart=0

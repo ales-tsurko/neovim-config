@@ -50,6 +50,7 @@ cmd [[ set splitkeep=screen ]] -- stabilize window behavior
 opt.statuscolumn = "%s%=%T%r%l   %T"
 opt.background = "dark"
 opt.conceallevel = 2
+opt.winblend = 10 -- float window transparency
 -- }}}
 
 -- Optimizations {{{

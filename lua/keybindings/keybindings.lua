@@ -6,7 +6,7 @@ require "keybindings/nomode_like"
 -- prevent moving cursor when yanking (copying)
 vm('y', 'ygv<Esc>', "yank")
 -- make insert work as expected in visual mode
-vm('i', 'I', "insert")
+-- vm('i', 'I', "insert") -- conflicts with vi - selection
 -- }}}
 
 -- Open Telescope.
@@ -19,17 +19,25 @@ im('<leader><leader>', '<cmd>Telescope<CR>', 'Open Telescope.')
 
 -- files {{{
 -- nm('<A-Tab>', '<cmd>Neotree position=top toggle<CR>', 'Toggle file explorer.') -- Toggle file explorer
+-- alt-t
+nm('†', '<cmd>Neotree source=document_symbols toggle<CR>', 'Toggle file explorer.') -- Toggle file explorer
+-- im('<A-Tab>', '<cmd>Neotree position=top toggle<CR>', 'Toggle file explorer.') -- Toggle file explorer
+-- alt-t
+im('†', '<cmd>Neotree source=document_symbols toggle<CR>', 'Toggle file explorer.') -- Toggle file explorer
 nm('<A-Tab>', '<cmd>OilToggle<CR>', 'Toggle file explorer.') -- Toggle file explorer
-nm('<Leader>fo', '<cmd>Telescope frecency workspace=CWD<CR>', 'Find files.')
-nm('<Leader>ff', '<cmd>Telescope live_grep <CR>', 'Find string (live grep preview).')
-nm('<Leader>fs', '<cmd>Telescope current_buffer_fuzzy_find<CR>', 'Find string in the current buffer.')
-im('<Leader>fo', '<cmd>Telescope frecency workspace=CWD<CR>', 'Find files.')
-im('<Leader>ff', '<cmd>Telescope live_grep <CR>', 'Find string (live grep preview).')
-im('<Leader>fs', '<cmd>Telescope current_buffer_fuzzy_find<CR>', 'Find string in the current buffer.')
+im('<A-Tab>', '<cmd>OilToggle<CR>', 'Toggle file explorer.') -- Toggle file explorer
+nm('<Leader>fo', '<cmd>Telescope frecency workspace=CWD theme=ivy<CR>', 'Find files.')
+nm('<Leader>ff', '<cmd>Telescope live_grep theme=ivy<CR>', 'Find string (live grep preview).')
+nm('<Leader>fs', '<cmd>Telescope current_buffer_fuzzy_find theme=ivy<CR>', 'Find string in the current buffer.')
+im('<Leader>fo', '<cmd>Telescope frecency workspace=CWD theme=ivy<CR>', 'Find files.')
+im('<Leader>ff', '<cmd>Telescope live_grep theme=ivy<CR>', 'Find string (live grep preview).')
+im('<Leader>fs', '<cmd>Telescope current_buffer_fuzzy_find theme=ivy<CR>', 'Find string in the current buffer.')
 -- }}}
 
 -- find and replace {{{
-nm('<C-s>', '<cmd>GrugFar<CR>', 'Find and replace');
+nm('<C-s>', '<cmd>lua require("spectre").toggle()<CR>', 'Find and replace');
+nm('<C-s>w', '<cmd>lua require("spectre").open_visual({select_word=true})<CR>', 'Search current word');
+vm('<C-s>p', '<cmd>lua require("spectre").open_file_search({select_word=true})<CR>', 'Search on current file');
 -- }}}
 
 -- buffers {{{
@@ -42,12 +50,12 @@ nm('<C-t>c', '<cmd>BufDel<CR>', 'Close buffer.')
 -- Go to {{{
 nm('<leader>gd', '<cmd>Telescope lsp_definitions theme=cursor<CR>', 'Go to definition.')
 nm('<leader>gi', '<cmd>Telescope lsp_implementations theme=cursor<CR>', 'Go to implementations')
-nm('<leader>gr', '<cmd>Telescope lsp_references theme=cursor<CR>', 'Go to reference.')
-nm('<leader>gt', '<cmd>Telescope lsp_document_symbols<CR>', 'Go to symbol.')
+nm('<leader>gr', '<cmd>Telescope lsp_references theme=ivy<CR>', 'Go to reference.')
+nm('<leader>gt', '<cmd>Telescope lsp_document_symbols theme=ivy<CR>', 'Go to symbol.')
 im('<leader>gd', '<cmd>Telescope lsp_definitions theme=cursor<CR>', 'Go to definition.')
 im('<leader>gi', '<cmd>Telescope lsp_implementations theme=cursor<CR>', 'Go to implementations')
-im('<leader>gr', '<cmd>Telescope lsp_references theme=cursor<CR>', 'Go to reference.')
-im('<leader>gt', '<cmd>Telescope lsp_document_symbols<CR>', 'Go to symbol.')
+im('<leader>gr', '<cmd>Telescope lsp_references theme=ivy<CR>', 'Go to reference.')
+im('<leader>gt', '<cmd>Telescope lsp_document_symbols theme=ivy<CR>', 'Go to symbol.')
 vim.api.nvim_set_keymap('n', '<C-j>', 'zj', { noremap = true, silent = true, desc = 'Go to next fold' })
 vim.api.nvim_set_keymap('n', '<C-k>', 'zk', { noremap = true, silent = true, desc = 'Go to previous fold' })
 -- }}}
@@ -56,12 +64,12 @@ vim.api.nvim_set_keymap('n', '<C-k>', 'zk', { noremap = true, silent = true, des
 vim.keymap.set("n", "<leader>?", function()
   require("which-key").show({ global = false })
 end, { noremap = true, silent = true, desc = "Buffer Local Keymaps (which-key)" })
-nm('<leader>dk', '<cmd>Telescope keymaps<CR>', 'Show keymaps.')
-im('<leader>dk', '<cmd>Telescope keymaps<CR>', 'Show keymaps.')
-nm('<leader>ds', '<cmd>Telescope help_tags<CR>', 'Search documentation (by tags).')
-im('<leader>ds', '<cmd>Telescope help_tags<CR>', 'Search documentation (by tags).')
-nm('<leader>dg', '<cmd>Telescope helpgrep<CR>', 'Grep documentation.')
-im('<leader>dg', '<cmd>Telescope helpgrep<CR>', 'Grep documentation.')
+nm('<leader>dk', '<cmd>Telescope keymaps theme=ivy<CR>', 'Show keymaps.')
+im('<leader>dk', '<cmd>Telescope keymaps theme=ivy<CR>', 'Show keymaps.')
+nm('<leader>ds', '<cmd>Telescope help_tags theme=ivy<CR>', 'Search documentation (by tags).')
+im('<leader>ds', '<cmd>Telescope help_tags theme=ivy<CR>', 'Search documentation (by tags).')
+nm('<leader>dg', '<cmd>Telescope helpgrep theme=ivy<CR>', 'Grep documentation.')
+im('<leader>dg', '<cmd>Telescope helpgrep theme=ivy<CR>', 'Grep documentation.')
 -- }}}
 
 -- diagnostics {{{
@@ -110,11 +118,11 @@ require('Comment').setup({
   ignore = '^$',
   toggler = {
     line = '<C-;>',
-    block = '<C-/>',
+    block = '<C-:>',
   },
   opleader = {
     line = '<C-;>',
-    block = '<C-/>',
+    block = '<C-:>',
   },
 })
 -- }}}

@@ -7,7 +7,6 @@ require("mason").setup()
 mason_lspconfig.setup({
     ensure_installed = {
         "lua_ls",        -- LSP for Lua language
-        "tsserver",      -- LSP for Typescript and Javascript
         "pyright",       -- LSP for Python
         "rust_analyzer", -- LSP for Rust
         "taplo",         -- LSP for TOML
@@ -25,6 +24,37 @@ end }
 
 -- Initialize slint LSP
 lspconfig.slint_lsp.setup {}
+
+lspconfig.rust_analyzer.setup {
+    settings = {
+        ['rust-analyzer'] = {
+            completion = {
+                autoimport = {
+                    enable = false
+                }
+            },
+            diagnostics = {
+                warningsAsHint = { "missing_docs" },
+                enableExperimental = true -- needed for style lints
+            },
+            checkOnSave = {
+                command = "clippy", -- added to enable style lints
+                extraArgs = { "--target-dir", "target/debug/analyzer" }
+            }
+        }
+    },
+}
+
+-- https://github.com/neovim/neovim/issues/30985
+for _, method in ipairs({ 'textDocument/diagnostic', 'workspace/diagnostic' }) do
+    local default_diagnostic_handler = vim.lsp.handlers[method]
+    vim.lsp.handlers[method] = function(err, result, context, config)
+        if err ~= nil and err.code == -32802 then
+            return
+        end
+        return default_diagnostic_handler(err, result, context, config)
+    end
+end
 
 -- this is for diagnositcs signs on the line number column
 -- use this to beautify the plain E W signs to more fun ones

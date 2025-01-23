@@ -32,6 +32,7 @@ cmp.setup {
 
     sources = cmp.config.sources({
         { name = 'nvim_lsp' },                -- LSP
+        { name = 'supermaven' },              -- Supermaven
         -- { name = 'copilot' },                 -- Copilot
         { name = 'codeium' },                 -- Codeium
         { name = 'nvim_lsp_signature_help' }, -- LSP for parameters in functions
@@ -49,6 +50,7 @@ cmp.setup {
             show_labelDetails = true, -- show labelDetails in menu. Disabled by default
             ellipsis_char = '...',
             symbol_map = {
+                Supermaven = "",
                 Codeium = "",
                 -- Copilot = '󰚩',
             }
@@ -68,6 +70,8 @@ cmp.setup {
         ghost_text = true,
     }
 }
+
+vim.api.nvim_set_hl(0, "CmpItemKindSupermaven", {fg ="#6CC644"})
 
 -- command line completions
 cmp.setup.cmdline({ '/', '?' }, {

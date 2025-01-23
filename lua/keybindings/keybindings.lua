@@ -2,7 +2,7 @@ require "../helpers/globals"
 require "../helpers/keyboard"
 require "keybindings/nomode_like"
 
--- editing {{{ 
+-- editing {{{
 -- prevent moving cursor when yanking (copying)
 vm('y', 'ygv<Esc>', "yank")
 -- make insert work as expected in visual mode
@@ -127,9 +127,9 @@ require('Comment').setup({
 })
 -- }}}
 
--- vimwiki {{{
-nm('<leader>tt', '<cmd>VimwikiToggleListItem<CR>', 'Vimwiki: toggle todo list item.')
-im('<leader>tt', '<cmd>VimwikiToggleListItem<CR>', 'Vimwiki: toggle todo list item.')
+-- wiki {{{
+-- nm('<leader>tt', '<cmd>VimwikiToggleListItem<CR>', 'Vimwiki: toggle todo list item.')
+-- im('<leader>tt', '<cmd>VimwikiToggleListItem<CR>', 'Vimwiki: toggle todo list item.')
 -- }}}
 
 -- other {{{

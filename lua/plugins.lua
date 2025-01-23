@@ -130,10 +130,10 @@ return {
   -- }}}
 
   -- image.nvim - preview images (where supported) {{{
-  {
-    "3rd/image.nvim",
-    opts = {}
-  },
+  -- {
+  --   "3rd/image.nvim",
+  --   opts = {}
+  -- },
   -- }}}
 
   -- neo-tree file, symbols browser {{{
@@ -237,6 +237,59 @@ return {
   --   },
   --   config = true,
   -- },
+  -- }}}
+
+  -- Supermaven - AI completions {{{
+  {
+    "supermaven-inc/supermaven-nvim",
+    config = function()
+      require "extensions.supermaven"
+    end,
+  },
+  -- }}}
+
+  -- avante.nvim - AI assistant {{{
+  {
+    "yetone/avante.nvim",
+    event = "VeryLazy",
+    lazy = false,
+    version = false,
+    dependencies = {
+      "stevearc/dressing.nvim",
+      "nvim-lua/plenary.nvim",
+      "MunifTanjim/nui.nvim",
+      --- The below dependencies are optional,
+      "zbirenbaum/copilot.lua", -- for providers='copilot'
+      {
+        -- support for image pasting
+        "HakonHarnes/img-clip.nvim",
+        event = "VeryLazy",
+        opts = {
+          -- recommended settings
+          default = {
+            embed_image_as_base64 = false,
+            prompt_for_file_name = false,
+            drag_and_drop = {
+              insert_mode = true,
+            },
+            -- required for Windows users
+            use_absolute_path = true,
+          },
+        },
+      },
+      {
+        -- Make sure to set this up properly if you have lazy=true
+        'MeanderingProgrammer/render-markdown.nvim',
+        opts = {
+          file_types = { "markdown", "Avante" },
+        },
+        ft = { "markdown", "Avante" },
+      },
+    },
+    config = function()
+      require "extensions.avante"
+    end
+  },
   -- }}}
 
   -- autopairs {{{
@@ -353,13 +406,13 @@ return {
   },
   -- }}}
 
-  -- vimwiki {{{
-  {
-    'vimwiki/vimwiki',
-    init = function()
-      require "extensions.vimwiki"
-    end
-  },
+  -- vimwiki - DISABLED {{{
+  -- {
+  --   'vimwiki/vimwiki',
+  --   init = function()
+  --     require "extensions.vimwiki"
+  --   end
+  -- },
   --}}}
 
   -- lualine {{{
@@ -466,32 +519,6 @@ return {
   },
   -- }}}
 
-  -- language: nu (DISABLED breaks 0.10) {{{
-  -- {
-  --   "LhKipp/nvim-nu",
-  --   dependencies = {
-  --     "nvim-lua/plenary.nvim",
-  --     "jose-elias-alvarez/null-ls.nvim",
-  --     "zioroboco/nu-ls.nvim",
-  --   },
-  --   config = function()
-  --     require("nu").setup({})
-  --   end
-  -- },
-  -- }}}
-
-  -- language: slint {{{
-  {
-    "slint-ui/vim-slint"
-  },
-  -- }}}
-
-  -- language: koto {{{
-  {
-    "koto-lang/koto.vim"
-  },
-  -- }}}
-
   -- crates.nvim - a plugin to work with crates.io - DISABLED - too slow for big projects {{{
   -- {
   --   'saecki/crates.nvim',
@@ -510,6 +537,12 @@ return {
     config = function()
       require('render-markdown').setup({})
     end,
+  },
+  -- }}}
+
+  -- follow markdown links {{{
+  {
+    'jghauser/follow-md-links.nvim'
   },
   -- }}}
 
@@ -557,11 +590,30 @@ return {
   },
 
   {
+    -- DEFAULT
+    'folke/tokyonight.nvim',
+    lazy = false,
+    priority = 1000,
+    opts = {},
+    config = function()
+      cmd("color tokyonight-storm")
+    end
+  },
+
+  {
     "nyoom-engineering/oxocarbon.nvim",
     priority = 1000,
     -- config = function()
     --   vim.opt.background = 'dark'
     --   cmd("color oxocarbon")
+    -- end
+  },
+
+  {
+    "rebelot/kanagawa.nvim",
+    priority = 1000,
+    -- config = function()
+    --   cmd("color kanagawa")
     -- end
   },
 
@@ -596,13 +648,44 @@ return {
   },
 
   {
-    -- DEFAULT
     "olimorris/onedarkpro.nvim",
     lazy = false,
     priority = 1000,
     config = function()
-      cmd("color onedark")
+      -- cmd("color onedark")
     end
+  },
+  -- }}}
+
+  -- language: nu (DISABLED breaks 0.10) {{{
+  -- {
+  --   "LhKipp/nvim-nu",
+  --   dependencies = {
+  --     "nvim-lua/plenary.nvim",
+  --     "jose-elias-alvarez/null-ls.nvim",
+  --     "zioroboco/nu-ls.nvim",
+  --   },
+  --   config = function()
+  --     require("nu").setup({})
+  --   end
+  -- },
+  -- }}}
+
+  -- language: slint {{{
+  {
+    "slint-ui/vim-slint"
+  },
+  -- }}}
+
+  -- language: koto {{{
+  {
+    "koto-lang/koto.vim"
+  },
+  -- }}}
+
+  -- language: glsl {{{
+  {
+    "tikhomirov/vim-glsl"
   },
   -- }}}
 }

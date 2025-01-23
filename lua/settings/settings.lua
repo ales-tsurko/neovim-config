@@ -22,9 +22,9 @@ opt.softtabstop = 0    -- Set amount of space characters, when we press "<Tab>"
 
 -- Editing {{{
 opt.foldenable = true
-opt.spelllang = "en_us,ru_ru" -- Set spell language
-opt.wrap = false              -- Disable word wrap
-opt.scrolloff = 999           -- Keep cursor always in the middle
+opt.spelllang = "en_us,ru_ru"                     -- Set spell language
+opt.wrap = false                                  -- Disable word wrap
+opt.scrolloff = 999                               -- Keep cursor always in the middle
 cmd [[ set completeopt="menuone,preview"]]
 cmd [[ nnoremap * :keepjumps normal! mi*`i<CR> ]] -- prevent "super star" jumps
 -- }}}
@@ -109,12 +109,16 @@ cmd [[au FileType org setlocal tw=80]]
 cmd [[au FileType c setlocal tw=80]]
 cmd [[au FileType cpp setlocal tw=80]]
 -- js/jsx/ts/tsx
-cmd [[au FileType js setlocal tw=100]]
 cmd [[au FileType javascript setlocal tw=100]]
+cmd [[au FileType javascript setlocal shiftwidth=2]]
+cmd [[au FileType javascript setlocal tabstop=2]]
+cmd [[au FileType jsx setlocal shiftwidth=2]]
+cmd [[au FileType jsx setlocal tabstop=2]]
 cmd [[au FileType jsx setlocal tw=100]]
 cmd [[au FileType ts setlocal tw=100]]
-cmd [[au FileType typescript setlocal tw=100]]
 cmd [[au FileType tsx setlocal tw=100]]
+cmd [[au FileType typescript setlocal tw=100]]
+
 -- py
 cmd [[au FileType py setlocal tw=80]]
 cmd [[au FileType python setlocal tw=80]]
@@ -127,6 +131,8 @@ cmd [[au FileType rust setlocal foldlevelstart=0]]
 cmd [[au FileType rust setlocal foldenable]]
 -- lua
 cmd [[au FileType lua setlocal tw=80]]
+cmd [[au FileType lua setlocal shiftwidth=2]]
+cmd [[au FileType lua setlocal tabstop=2]]
 -- yaml
 cmd [[au FileType yaml setlocal tabstop=2]]
 cmd [[au FileType yaml setlocal shiftwidth=2]]

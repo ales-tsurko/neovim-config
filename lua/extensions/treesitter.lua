@@ -24,6 +24,7 @@ require'nvim-treesitter.configs'.setup {
       "julia",
       "lua",
       "markdown",
+      "markdown_inline",
       -- "nu",
       "org",
       "python",

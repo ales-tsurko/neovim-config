@@ -239,59 +239,6 @@ return {
   -- },
   -- }}}
 
-  -- Supermaven - AI completions {{{
-  {
-    "supermaven-inc/supermaven-nvim",
-    config = function()
-      require "extensions.supermaven"
-    end,
-  },
-  -- }}}
-
-  -- avante.nvim - AI assistant {{{
-  {
-    "yetone/avante.nvim",
-    event = "VeryLazy",
-    lazy = false,
-    version = false,
-    dependencies = {
-      "stevearc/dressing.nvim",
-      "nvim-lua/plenary.nvim",
-      "MunifTanjim/nui.nvim",
-      --- The below dependencies are optional,
-      "zbirenbaum/copilot.lua", -- for providers='copilot'
-      {
-        -- support for image pasting
-        "HakonHarnes/img-clip.nvim",
-        event = "VeryLazy",
-        opts = {
-          -- recommended settings
-          default = {
-            embed_image_as_base64 = false,
-            prompt_for_file_name = false,
-            drag_and_drop = {
-              insert_mode = true,
-            },
-            -- required for Windows users
-            use_absolute_path = true,
-          },
-        },
-      },
-      {
-        -- Make sure to set this up properly if you have lazy=true
-        'MeanderingProgrammer/render-markdown.nvim',
-        opts = {
-          file_types = { "markdown", "Avante" },
-        },
-        ft = { "markdown", "Avante" },
-      },
-    },
-    config = function()
-      require "extensions.avante"
-    end
-  },
-  -- }}}
-
   -- autopairs {{{
   {
     'windwp/nvim-autopairs',
@@ -301,9 +248,9 @@ return {
   },
   -- }}}
 
-  -- edit surroundings {{{
+  -- mini.surround - edit surroundings {{{
   {
-    "kylechui/nvim-surround",
+    "echasnovski/mini.surround",
     version = "*", -- Use for stability; omit to use `main` branch for the latest features
     event = "VeryLazy",
     config = true,

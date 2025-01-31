@@ -86,23 +86,6 @@ vim.api.nvim_set_keymap('x', '<D-c>', 'y', { noremap = true, silent = true })
 -- paste
 remap_key('<D-v>', 'P')
 vim.api.nvim_set_keymap('x', '<D-v>', 'p', { noremap = true, silent = true })
--- wrap in selected text
-function _G.wrap_text(open_char, close_char)
-    local save_reg = vim.fn.getreg('a')
-    local save_regtype = vim.fn.getregtype('a')
-    vim.api.nvim_command('normal! "ay')
-    local yanked_text = vim.fn.getreg('a')
-    vim.fn.setreg('a', save_reg, save_regtype)
-    vim.api.nvim_command('normal! gv"ad')
-    vim.api.nvim_put({ open_char .. yanked_text .. close_char }, 'c', false, true)
-end
-
-vim.api.nvim_set_keymap('x', '}', '<cmd>lua wrap_text("{", "}")<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('x', ']', '<cmd>lua wrap_text("[", "]")<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('x', ')', '<cmd>lua wrap_text("(", ")")<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('x', '"', '<cmd>lua wrap_text(\'"\', \'"\')<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('x', "'", '<cmd>lua wrap_text("\'", "\'")<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('x', '`', '<cmd>lua wrap_text("`", "`")<CR>', { noremap = true, silent = true })
 
 -- Moving
 -- move to start/end of the line

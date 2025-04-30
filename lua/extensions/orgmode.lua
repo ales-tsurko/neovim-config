@@ -9,7 +9,7 @@
 require('orgmode').setup({
     org_agenda_files = '~/org/**/*',
     org_default_notes_file = '~/org/index.org',
-    org_todo_keywords = { 'TODO', 'BUG', 'VERIFY', '|', 'DONE', 'FIXED', 'CANCELED' },
+    org_todo_keywords = { 'TODO', 'IN-REVIEW', '|', 'DONE' },
     org_hide_leading_stars = true,
     mappings = {
         -- commented-out are defaults

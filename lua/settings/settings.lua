@@ -5,6 +5,7 @@
 
 require "../helpers/globals"
 -- require "settings/project_config"
+require "settings/md_list_folding"
 
 
 -- Set associating between turned on plugins and filetype
@@ -86,28 +87,35 @@ opt.wildmode = "longest:full,full"
 -- General
 -- Disable comments on pressing Enter
 cmd [[au FileType * setlocal formatoptions-=cro]]
+
 -- sh
 cmd [[au FileType sh setlocal tw=80]]
+
 -- md
 cmd [[au FileType markdown setlocal nonumber]]
 cmd [[au FileType markdown setlocal spell]]
 cmd [[au FileType markdown setlocal tw=80]]
 cmd [[au FileType markdown setlocal wrap]]
+
 -- wgsl
 cmd [[au FileType wgsl setlocal tw=80]]
 cmd [[au BufNewFile,BufRead *.wgsl set filetype=wgsl]]
+
 -- vimwiki
 cmd [[au FileType vimwiki setlocal nonumber]]
 cmd [[au FileType vimwiki setlocal wrap]]
 cmd [[au FileType vimwiki setlocal tw=80]]
 cmd [[au FileType vimwiki setlocal spell]]
+
 -- org
 cmd [[au FileType org setlocal nonumber]]
 cmd [[au FileType org setlocal wrap]]
 cmd [[au FileType org setlocal tw=80]]
+
 -- c/c++
 cmd [[au FileType c setlocal tw=80]]
 cmd [[au FileType cpp setlocal tw=80]]
+
 -- js/jsx/ts/tsx
 cmd [[au FileType javascript setlocal tw=100]]
 cmd [[au FileType javascript setlocal shiftwidth=2]]
@@ -122,6 +130,7 @@ cmd [[au FileType typescript setlocal tw=100]]
 -- py
 cmd [[au FileType py setlocal tw=80]]
 cmd [[au FileType python setlocal tw=80]]
+
 -- rust
 cmd [[au FileType rust setlocal tw=100]]
 cmd [[au FileType rust setlocal foldmethod=manual]]
@@ -129,17 +138,22 @@ cmd [[au FileType rust setlocal foldmethod=manual]]
 -- cmd [[au FileType rust setlocal foldmarker={,}]]
 cmd [[au FileType rust setlocal foldlevelstart=0]]
 cmd [[au FileType rust setlocal foldenable]]
+
 -- lua
 cmd [[au FileType lua setlocal tw=80]]
 cmd [[au FileType lua setlocal shiftwidth=2]]
 cmd [[au FileType lua setlocal tabstop=2]]
+
 -- yaml
 cmd [[au FileType yaml setlocal tabstop=2]]
 cmd [[au FileType yaml setlocal shiftwidth=2]]
+
 -- git
 cmd [[autocmd FileType gitcommit,gitrebase,gitconfig set bufhidden=delete]]
+
 -- slint
 cmd [[au FileType slint setlocal tw=0]]
+
 -- oil (file browser)
 cmd [[au FileType oil setlocal nonumber]]
 -- }}}

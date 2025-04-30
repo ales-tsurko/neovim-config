@@ -19,11 +19,11 @@ im('<leader><leader>', '<cmd>Telescope<CR>', 'Open Telescope.')
 
 -- files {{{
 -- nm('<A-Tab>', '<cmd>Neotree position=top toggle<CR>', 'Toggle file explorer.') -- Toggle file explorer
--- alt-t
-nm('†', '<cmd>Neotree source=document_symbols toggle<CR>', 'Toggle file explorer.') -- Toggle file explorer
 -- im('<A-Tab>', '<cmd>Neotree position=top toggle<CR>', 'Toggle file explorer.') -- Toggle file explorer
 -- alt-t
-im('†', '<cmd>Neotree source=document_symbols toggle<CR>', 'Toggle file explorer.') -- Toggle file explorer
+nm('†', '<cmd>Neotree source=document_symbols toggle<CR>', 'Browse file symbols.') -- Toggle symbols explorer
+im('†', '<cmd>Neotree source=document_symbols toggle<CR>', 'Browse file symbols.') -- Toggle symbols explorer
+
 nm('<A-Tab>', '<cmd>OilToggle<CR>', 'Toggle file explorer.') -- Toggle file explorer
 im('<A-Tab>', '<cmd>OilToggle<CR>', 'Toggle file explorer.') -- Toggle file explorer
 nm('<Leader>fo', '<cmd>Telescope frecency workspace=CWD theme=ivy<CR>', 'Find files.')

@@ -74,21 +74,22 @@ lspconfig.rust_analyzer.setup {
 --         return default_diagnostic_handler(err, result, context, config)
 --     end
 -- end
-
--- this is for diagnositcs signs on the line number column
--- use this to beautify the plain E W signs to more fun ones
--- !important nerdfonts needs to be setup for this to work in your terminal
-local signs = {
-  Error = "",
-  Warn = "",
-  Hint = " ",
-  Info = " "
+local icons = {
+  [vim.diagnostic.severity.ERROR] = "",
+  [vim.diagnostic.severity.WARN]  = "",
+  [vim.diagnostic.severity.HINT]  = "",
+  [vim.diagnostic.severity.INFO]  = "",
 }
-for type, icon in pairs(signs) do
-  local hl = "DiagnosticSign" .. type
-  vim.fn.sign_define(hl, {
-    text = icon,
-    texthl = hl,
-    numhl = hl
-  })
-end
+
+vim.diagnostic.config({
+  signs = {
+    text  = icons,              -- glyphs in the sign column
+    -- optional: highlight the number column the same way
+    numhl = {
+      [vim.diagnostic.severity.ERROR] = "DiagnosticSignError",
+      [vim.diagnostic.severity.WARN]  = "DiagnosticSignWarn",
+      [vim.diagnostic.severity.HINT]  = "DiagnosticSignHint",
+      [vim.diagnostic.severity.INFO]  = "DiagnosticSignInfo",
+    },
+  },
+})

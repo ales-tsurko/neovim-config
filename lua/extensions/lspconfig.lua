@@ -6,22 +6,22 @@ require("mason").setup()
 
 mason_lspconfig.setup({
   ensure_installed = {
-    "lua_ls",            -- LSP for Lua language
-    "pyright",           -- LSP for Python
-    "rust_analyzer",     -- LSP for Rust
-    "taplo",             -- LSP for TOML
-    "wgsl_analyzer",     -- LSP for WebGPU Shading Language
-    "ts_ls",             -- LSP for TypeScript/JavaScript
-    "efm",               -- general purpose LSP
+    "lua_ls",        -- LSP for Lua language
+    -- "pyright",       -- LSP for Python
+    "rust_analyzer", -- LSP for Rust
+    "taplo",         -- LSP for TOML
+    "wgsl_analyzer", -- LSP for WebGPU Shading Language
+    "ts_ls",         -- LSP for TypeScript/JavaScript
+    "efm",           -- general purpose LSP
   }
 });
 
 -- Setup every needed language server in lspconfig
-mason_lspconfig.setup_handlers { function(server_name)
-  lspconfig[server_name].setup {
-    capabilities = capabilities
-  }
-end }
+-- mason_lspconfig.setup_handlers { function(server_name)
+--   lspconfig[server_name].setup {
+--     capabilities = capabilities
+--   }
+-- end }
 
 -- Initialize slint LSP
 lspconfig.slint_lsp.setup {}
@@ -52,12 +52,15 @@ lspconfig.rust_analyzer.setup {
       },
       diagnostics = {
         warningsAsHint = { "missing_docs" },
-        enableExperimental = true         -- needed for style lints
+        enableExperimental = true -- needed for style lints
       },
       check = {
-        command = "clippy",         -- added to enable style lints
+        command = "clippy", -- added to enable style lints
+        -- invocationStrategy = "once",
       },
       cargo = {
+        -- avoid constant workspace reloads
+        autoreload = false,
         targetDir = "target/analyzer"
       }
     }
@@ -82,8 +85,8 @@ local icons = {
 }
 
 vim.diagnostic.config({
-  signs = {
-    text  = icons,              -- glyphs in the sign column
+  signs            = {
+    text  = icons, -- glyphs in the sign column
     -- optional: highlight the number column the same way
     numhl = {
       [vim.diagnostic.severity.ERROR] = "DiagnosticSignError",
@@ -92,4 +95,8 @@ vim.diagnostic.config({
       [vim.diagnostic.severity.INFO]  = "DiagnosticSignInfo",
     },
   },
+  virtual_text     = true,
+  underline        = true,
+  severity_sort    = true,
+  -- update_in_insert = false, -- keep them until InsertLeave
 })

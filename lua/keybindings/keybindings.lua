@@ -32,6 +32,8 @@ nm('<Leader>fs', '<cmd>Telescope current_buffer_fuzzy_find theme=ivy<CR>', 'Find
 im('<Leader>fo', '<cmd>Telescope frecency workspace=CWD theme=ivy<CR>', 'Find files.')
 im('<Leader>ff', '<cmd>Telescope live_grep theme=ivy<CR>', 'Find string (live grep preview).')
 im('<Leader>fs', '<cmd>Telescope current_buffer_fuzzy_find theme=ivy<CR>', 'Find string in the current buffer.')
+
+nm('<Leader>b', '<cmd>Make<CR>', 'Run :Make')
 -- }}}
 
 -- find and replace {{{

@@ -66,6 +66,7 @@ return {
 
   -- nvim-origami: fold/unfold using h/l {{{
   {
+    enabled = false, -- temporary disabled - new version is buggy
     "chrisgrieser/nvim-origami",
     event = "BufReadPost", -- later or on keypress would prevent saving folds
     opts = {},             -- needed even when using default config
@@ -105,6 +106,17 @@ return {
     },
     config = function()
       require "extensions.lspconfig"
+    end
+  },
+  --}}}
+
+  -- Show inline diagnostics {{{
+  {
+    "rachartier/tiny-inline-diagnostic.nvim",
+    event = "VeryLazy", -- Or `LspAttach`
+    priority = 1000,    -- needs to be loaded in first
+    config = function()
+      require "extensions.tiny-inline-diagnostic"
     end
   },
   --}}}
@@ -200,6 +212,7 @@ return {
 
   -- better quickfix {{{
   {
+    enabled = false, -- buggy
     'kevinhwang91/nvim-bqf'
   },
   -- }}}
@@ -523,6 +536,7 @@ return {
   },
 
   {
+    -- DEFAULT
     'mcchrish/zenbones.nvim',
     dependencies = {
       'rktjmp/lush.nvim'
@@ -530,20 +544,19 @@ return {
     lazy = false,
     priority = 1000,
     config = function()
-      -- cmd("color zenwritten")
+      cmd("color zenwritten")
       -- cmd("color nordbones")
       -- cmd("color tokyobones")
     end
   },
 
   {
-    -- DEFAULT
     'folke/tokyonight.nvim',
     lazy = false,
     priority = 1000,
     opts = {},
     config = function()
-      cmd("color tokyonight-storm")
+      -- cmd("color tokyonight-storm")
     end
   },
 
@@ -559,9 +572,10 @@ return {
   {
     "rebelot/kanagawa.nvim",
     priority = 1000,
-    -- config = function()
-    --   cmd("color kanagawa")
-    -- end
+    config = function()
+      require "extensions.kanagawa"
+      -- cmd("color kanagawa")
+    end
   },
 
   {
@@ -602,6 +616,32 @@ return {
       -- cmd("color onedark")
     end
   },
+
+  {
+    "alexxGmZ/e-ink.nvim",
+    priority = 1000,
+    config = function()
+      -- require("e-ink").setup({})
+      -- cmd("e-ink")
+    end
+  },
+
+  {
+    "marko-cerovac/material.nvim",
+    priority = 1000,
+    config = function()
+      -- cmd("color material-darker")
+    end
+  },
+
+  {
+    "EdenEast/nightfox.nvim",
+    priority = 1000,
+    config = function()
+      require "extensions.nightfox"
+      -- cmd("color nightfox")
+    end
+  },
   -- }}}
 
   -- language: nu (DISABLED breaks 0.10) {{{
@@ -633,6 +673,15 @@ return {
   -- language: glsl {{{
   {
     "tikhomirov/vim-glsl"
+  },
+  -- }}}
+
+  -- language: lilypond {{{
+  {
+    'martineausimon/nvim-lilypond-suite',
+    config = function()
+      require "extensions.lilypond"
+    end,
   },
   -- }}}
 }

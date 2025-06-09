@@ -6,6 +6,7 @@
 require "../helpers/globals"
 -- require "settings/project_config"
 require "settings/md_list_folding"
+require "settings/make"
 
 
 -- Set associating between turned on plugins and filetype
@@ -37,7 +38,7 @@ opt.startofline = true   -- move the cursor to the first non-blank of the line f
 opt.number = true        -- line numbers
 opt.laststatus = 3       -- Single status line
 opt.signcolumn = "yes:2" -- Always show sign column
-opt.guifont = "Iosevka Nerd Font Mono:13"
+opt.guifont = "VictorMono Nerd Font Mono:h12"
 cmd [[set fillchars=eob:\ ]]
 opt.foldnestmax = 3
 opt.foldminlines = 1
@@ -171,7 +172,6 @@ if g.neovide then
   g.neovide_confirm_quit = true
 
   opt.linespace = 1
-  opt.guifont = "Iosevka_NFM:h13"
 end
 -- }}}
 

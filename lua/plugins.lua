@@ -212,7 +212,6 @@ return {
 
   -- better quickfix {{{
   {
-    enabled = false, -- buggy
     'kevinhwang91/nvim-bqf'
   },
   -- }}}

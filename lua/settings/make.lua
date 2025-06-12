@@ -1,135 +1,140 @@
--- make.lua – compact build helper for Neovim (no external plugins)
+-- make.lua – floating coloured :Make helper for Neovim ≥ 0.10
+-------------------------------------------------------------------------------
+-- Dual‑job architecture (final):
+--   • **termopen** PTY job for the popup → coloured live output (may show
+--     progress bars, fine). No capture.
+--   • **jobstart** (non‑PTY) shadow job for quick‑fix → exact raw output as if
+--     run in a pipe (no Cargo progress lines). Stdout/stderr are written
+--     verbatim to a temp file (newline‑terminated) and passed to :cfile.
 --
--- Features
---   * :Make {args…}    – run &makeprg with the given arguments, remember them
---   * :Make            – re‑run the **exact** previous shell line
---   * :MakeAgain       – same as a bare :Make but errors if you never ran it
---   * Live output      – bottom split that shows the last 2 lines while the
---                        build is running (non‑blocking)
---   * Quick‑fix list   – parsed with current &errorformat; opens 8‑line split
---                        only when there are entries
---
--- No dependencies beyond Neovim 0.8 (jobstart API).
+--   This restores the original quick‑fix behaviour while preserving coloured
+--   popup output.
 -------------------------------------------------------------------------------
 
-local M = {}
+local M                                             = {}
 
--- configurable ----------------------------------------------------------------
-local HEIGHT_LOG = 3   -- lines shown while the command runs
-local HEIGHT_QF  = 8   -- quick‑fix split height after the run
+-- user options ---------------------------------------------------------------
+local LOG_HEIGHT_FRAC, LOG_MIN_LINES, LOG_MAX_LINES = 0.25, 3, 15
+local LOG_WIDTH_FRAC, LOG_MAX_COLS                  = 0.8, 110
+local HEIGHT_QF                                     = 8
 
--------------------------------------------------------------------------------
--- internal state --------------------------------------------------------------
--------------------------------------------------------------------------------
-local last_cmd = nil   ---@type string|nil  -- full shell command to repeat
+local last_cmd ---@type string|nil
 
 -------------------------------------------------------------------------------
--- helpers ---------------------------------------------------------------------
+-- sizing helpers -------------------------------------------------------------
 -------------------------------------------------------------------------------
----Open a real bottom split (not a float) and return {buf, win}.
-local function open_log_window()
-  vim.cmd(('botright %dsplit'):format(HEIGHT_LOG))
-  local win = vim.api.nvim_get_current_win()
-  vim.wo[win].number = false
-  vim.wo[win].relativenumber = false
-  vim.wo[win].signcolumn = 'no'
-  vim.wo[win].wrap = false
-  vim.wo[win].winfixheight = true
+local function calc_height()
+  return math.max(LOG_MIN_LINES, math.min(LOG_MAX_LINES,
+    math.floor(vim.fn.winheight(0) * LOG_HEIGHT_FRAC)))
+end
+local function calc_width()
+  local w = math.floor(vim.o.columns * LOG_WIDTH_FRAC)
+  return math.max(20, math.min(LOG_MAX_COLS, w))
+end
 
+-------------------------------------------------------------------------------
+-- popup ----------------------------------------------------------------------
+-------------------------------------------------------------------------------
+local function popup(cmd)
+  local w, h = calc_width(), calc_height()
+  local row, col = math.floor((vim.o.lines - h) / 2), math.floor((vim.o.columns - w) / 2)
   local buf = vim.api.nvim_create_buf(false, true)
-  vim.api.nvim_win_set_buf(win, buf)
-  return buf, win
+  local win = vim.api.nvim_open_win(buf, true, {
+    relative = 'editor',
+    style = 'minimal',
+    border = 'rounded',
+    title = ' ' .. cmd .. ' ',
+    title_pos = 'center',
+    row = row,
+    col = col,
+    width = w,
+    height = h
+  })
+  vim.wo[win].number = false; vim.wo[win].relativenumber = false
+  vim.wo[win].signcolumn = 'no'; vim.wo[win].wrap = false; vim.wo[win].winfixheight = true
+  return win, buf
 end
 
----Keep only the last N lines in the buffer.
----@param buf integer
----@param ring table<string>
----@param n integer
-local function push_line(buf, ring, n, line)
-  if line == '' then return end
-  table.insert(ring, line)
-  if #ring > n then table.remove(ring, 1) end
-  vim.api.nvim_buf_set_lines(buf, 0, -1, false, ring)
+-------------------------------------------------------------------------------
+-- command builder ------------------------------------------------------------
+-------------------------------------------------------------------------------
+local function build_command(args)
+  local base = (vim.o.makeprg ~= '' and vim.o.makeprg) or 'make'
+  local function splice(a)
+    if base:find('%$%*') then
+      return (base:gsub('%$%*', a)):gsub('%s+', ' '):gsub('^%s+', ''):gsub('%s+$', '')
+    elseif a ~= '' then
+      return base .. ' ' .. a
+    else
+      return base
+    end
+  end
+  if #args == 0 then return last_cmd or splice('') end
+  last_cmd = splice(table.concat(args, ' ')); return last_cmd
 end
 
----Run the given shell command asynchronously.
----@param cmd string
-local function run_build(cmd)
-  local buf, win = open_log_window()
-  local ring = {}
+-------------------------------------------------------------------------------
+-- main runner ----------------------------------------------------------------
+-------------------------------------------------------------------------------
+local function run(cmd)
+  local win, buf = popup(cmd)
   local errfile = vim.fn.tempname()
 
-  vim.fn.jobstart({ 'sh', '-c', cmd }, {
+  -- Shadow capture job (no PTY) ---------------------------------------------
+  local capture_id = vim.fn.jobstart({ 'sh', '-c', cmd }, {
     stdout_buffered = false,
     stderr_buffered = false,
-
     on_stdout = function(_, data)
-      for _, l in ipairs(data) do
-        push_line(buf, ring, HEIGHT_LOG, l)
+      if type(data) == 'table' then
+        for _, l in ipairs(data) do
+          if l ~= '' then
+            vim.fn.writefile({ l .. '\n' }, errfile,
+              'a')
+          end
+        end
       end
-      vim.fn.writefile(data, errfile, 'a')
     end,
-
     on_stderr = function(_, data)
-      for _, l in ipairs(data) do
-        push_line(buf, ring, HEIGHT_LOG, l)
+      if type(data) == 'table' then
+        for _, l in ipairs(data) do
+          if l ~= '' then
+            vim.fn.writefile({ l .. '\n' }, errfile,
+              'a')
+          end
+        end
       end
-      vim.fn.writefile(data, errfile, 'a')
     end,
-
     on_exit = function(_, code)
       vim.schedule(function()
-        if vim.api.nvim_win_is_valid(win) then
-          vim.api.nvim_win_close(win, true)
+        local ok = false; if vim.fn.getfsize(errfile) > 0 then
+          ok = pcall(vim.cmd,
+            'cfile ' .. vim.fn.fnamemodify(errfile, ':p'))
         end
-
-        if vim.fn.getfsize(errfile) > 0 then
-          vim.cmd('cfile ' .. vim.fn.fnameescape(errfile))
-          if #vim.fn.getqflist() > 0 then
-            vim.cmd(('botright copen %d'):format(HEIGHT_QF))
-            vim.wo.winfixheight = true
-          end
-        else
-          vim.fn.delete(errfile)
+        vim.fn.delete(errfile)
+        if ok and #vim.fn.getqflist() > 0 then
+          vim.cmd(('botright copen %d'):format(HEIGHT_QF)); vim.cmd('wincmd J')
         end
-
-        local msg = code == 0 and 'Build succeeded' or 'Build failed'
-        local lvl = code == 0 and vim.log.levels.INFO or vim.log.levels.ERROR
-        vim.notify(msg, lvl)
+        if not vim.api.nvim_win_is_valid(win) then return end -- popup may close later
+        vim.notify(code == 0 and 'Build succeeded' or 'Build failed',
+          code == 0 and vim.log.levels.INFO or vim.log.levels.ERROR)
       end)
     end,
   })
+
+  -- Display job (PTY) --------------------------------------------------------
+  vim.fn.termopen({ 'sh', '-c', cmd }, {
+    on_exit = function() if vim.api.nvim_win_is_valid(win) then vim.api.nvim_win_close(win, true) end end,
+  })
+
+  vim.cmd('startinsert')
 end
 
 -------------------------------------------------------------------------------
--- user commands ----------------------------------------------------------------
+-- commands -------------------------------------------------------------------
 -------------------------------------------------------------------------------
-
----Build the shell command from &makeprg and an argument list.
-local function build_command(args)
-  local base = (vim.o.makeprg ~= '' and vim.o.makeprg) or 'make'
-  if #args == 0 then
-    return last_cmd or base
-  end
-  -- record full command for next repeat
-  last_cmd = base .. ' ' .. table.concat(args, ' ')
-  return last_cmd
-end
-
-vim.api.nvim_create_user_command('Make', function(opts)
-  local cmd = build_command(opts.fargs)
-  run_build(cmd)
-end, {
-  nargs = '*',
-  complete = 'shellcmd',
-})
-
-vim.api.nvim_create_user_command('MakeAgain', function()
-  if not last_cmd then
-    vim.notify('No previous :Make command', vim.log.levels.WARN)
-    return
-  end
-  run_build(last_cmd)
-end, {})
+vim.api.nvim_create_user_command('Make', function(opts) run(build_command(opts.fargs)) end,
+  { nargs = '*', complete = 'shellcmd' })
+vim.api.nvim_create_user_command('MakeAgain',
+  function() if last_cmd then run(last_cmd) else vim.notify('No previous :Make command', vim.log.levels.WARN) end end, {})
 
 return M

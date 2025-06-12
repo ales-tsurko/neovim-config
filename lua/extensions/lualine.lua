@@ -100,8 +100,8 @@ require('lualine').setup({
     },
     lualine_z = {
       "location",
-      lsp_toggle_component,
       background_component,
+      lsp_toggle_component,
     }
   },
   options = {
